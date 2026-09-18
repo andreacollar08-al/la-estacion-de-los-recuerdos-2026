@@ -20,8 +20,6 @@ const galleryPhotos = [
   { src: "/media/navidad-2026-galeria-02.jpg", alt: "Retrato de mujer con vestido rojo junto a la locomotora", width: 1024, height: 1280, kind: "portrait" },
   { src: "/media/navidad-2026-galeria-03.jpg", alt: "Padre y sus hijas abrazados en la estación navideña", width: 1280, height: 1066, kind: "landscape" },
   { src: "/media/navidad-2026-galeria-04.jpg", alt: "Familia sentada entre maletas frente a la locomotora", width: 1280, height: 1066, kind: "feature" },
-  { src: "/media/navidad-2026-galeria-05.jpg", alt: "Retrato de mujer con abrigo rojo en el set navideño", width: 853, height: 1280, kind: "portrait" },
-  { src: "/media/navidad-2026-galeria-06.jpg", alt: "Retrato de mujer sentada entre maletas junto al tren", width: 1280, height: 1066, kind: "landscape" },
   { src: "/media/navidad-2026-galeria-07.jpg", alt: "Dos mujeres leyendo el periódico en la estación", width: 1280, height: 1139, kind: "landscape" },
   { src: "/media/navidad-2026-galeria-08.jpg", alt: "Dos niños leyendo el periódico junto al tren", width: 1280, height: 1138, kind: "landscape" },
   { src: "/media/navidad-2026-galeria-09.jpg", alt: "Dos niños vestidos de maquinistas junto a la locomotora", width: 1280, height: 1139, kind: "feature" },

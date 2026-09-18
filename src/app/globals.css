@@ -160,9 +160,9 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .station-gallery-tile-portrait { aspect-ratio: 4 / 5; }
 .station-gallery-tile-landscape { aspect-ratio: 1.2 / 1; }
 .station-gallery-tile:nth-child(1) img { object-position: 54% center; }
-.station-gallery-tile:nth-child(2) img, .station-gallery-tile:nth-child(5) img { object-position: center 42%; }
-.station-gallery-tile:nth-child(4) img, .station-gallery-tile:nth-child(9) img { object-position: 58% center; }
-.station-gallery-tile:nth-child(7) img, .station-gallery-tile:nth-child(8) img { object-position: center 44%; }
+.station-gallery-tile:nth-child(2) img { object-position: center 42%; }
+.station-gallery-tile:nth-child(4) img, .station-gallery-tile:nth-child(7) img { object-position: 58% center; }
+.station-gallery-tile:nth-child(5) img, .station-gallery-tile:nth-child(6) img { object-position: center 44%; }
 @media (hover: hover) and (pointer: fine) {
   .station-gallery-tile:hover img { transform: scale(1.035); filter: saturate(1.05); }
 }
