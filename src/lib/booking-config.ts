@@ -22,6 +22,7 @@ export const VIP_SESSION_PRICE = 1600;
 
 export type SlotStatus = "available" | "held" | "not_open";
 export type Availability = {
+  paymentMode?: "demo" | "stripe" | "unavailable";
   dates: ((typeof OCTOBER_DATES)[number] & {
     slots: { time: string; available: boolean; status: SlotStatus }[];
   })[];

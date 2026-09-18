@@ -43,6 +43,8 @@ export default function BookingForm() {
   const [checkingCoupon, setCheckingCoupon] = useState(false);
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
+  const [paymentMode, setPaymentMode] = useState<Availability["paymentMode"]>("unavailable");
+  const paymentAttempt = useRef<{ payload: string; key: string } | null>(null);
   const [form, setForm] = useState({ name: "", whatsapp: "", email: "" });
   const [people, setPeople] = useState(INCLUDED_PEOPLE);
   const nameInput = useRef<HTMLInputElement>(null);
@@ -58,6 +60,7 @@ export default function BookingForm() {
     try {
       const data = await fetchAvailability();
       setAvailability(data.dates);
+      setPaymentMode(data.paymentMode);
       setLoadError(false);
       return data;
     } catch {
@@ -71,7 +74,7 @@ export default function BookingForm() {
     function refresh() {
       if (document.hidden) return;
       void fetchAvailability()
-        .then((data) => { if (active) { setAvailability(data.dates); setLoadError(false); } })
+        .then((data) => { if (active) { setAvailability(data.dates); setPaymentMode(data.paymentMode); setLoadError(false); } })
         .catch(() => { if (active) setLoadError(true); })
         .finally(() => { if (active) setLoading(false); });
     }
@@ -121,11 +124,15 @@ export default function BookingForm() {
     setSubmitting(true);
     setStatus("");
     const payload: ReservationInput = { date: selectedDate, time: selectedTime, ...form, people, coupon: couponApplied ? "NAVIDAD26" : "" };
+    const serialized = JSON.stringify(payload);
+    if (!paymentAttempt.current || paymentAttempt.current.payload !== serialized) {
+      paymentAttempt.current = { payload: serialized, key: crypto.randomUUID() };
+    }
     try {
-      const response = await fetch("/api/reservations", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+      const response = await fetch("/api/reservations", { method: "POST", headers: { "Content-Type": "application/json", "Idempotency-Key": paymentAttempt.current.key }, body: serialized });
       const data = await response.json();
       if (!response.ok) {
-        if (response.status === 409) { await loadAvailability(); setSelectedTime(""); changeSchedule(); }
+        if (response.status === 409) { paymentAttempt.current = null; setCouponApplied(false); await loadAvailability(); setSelectedTime(""); changeSchedule(); }
         throw new Error(data.error ?? "No pudimos preparar tu reserva. Inténtalo otra vez.");
       }
       window.location.assign(data.paymentUrl);
@@ -156,7 +163,7 @@ export default function BookingForm() {
             })}
           </div>
           <fieldset className="time-fieldset"><legend>Elige tu horario</legend>
-            <p className="release-note">Los horarios de la mañana aparecen como reservado y se liberan gradualmente con cada apartado.</p>
+            <p className="release-note">Los horarios de la mañana se abren gradualmente con cada reserva confirmada.</p>
             <div className="time-grid">{selectedDay?.slots.map((slot) => (
               <button type="button" key={slot.time} className="time-button" aria-pressed={selectedTime === slot.time}
                 aria-label={`${displayTime(slot.time)}${loading ? ", cargando" : slot.status === "held" ? ", apartado" : slot.status === "not_open" ? ", reservado" : selectedTime === slot.time ? ", seleccionado" : ", disponible"}`}
@@ -188,9 +195,9 @@ export default function BookingForm() {
             <div className="total-row"><dt>Anticipo del 50% {pricing.extraPeople > 0 ? "(incluye extras)" : ""}</dt><dd>${pricing.deposit.toLocaleString("es-MX")} MXN</dd></div>
             <div><dt>Saldo en efectivo el día de la sesión</dt><dd>${pricing.balance.toLocaleString("es-MX")} MXN</dd></div>
           </dl>
-          <button className="button button-wine submit-button" type="submit" disabled={submitting}>{submitting ? "Preparando tu reserva…" : `Continuar · $${pricing.deposit.toLocaleString("es-MX")} MXN`}<ArrowIcon /></button>
+          <button className="button button-wine submit-button" type="submit" disabled={submitting || paymentMode === "unavailable"}>{submitting ? "Preparando tu reserva…" : `Continuar · $${pricing.deposit.toLocaleString("es-MX")} MXN`}<ArrowIcon /></button>
           <p className="form-legal">Anticipo no reembolsable. Incluye un cambio de fecha gratis, sujeto a disponibilidad, dentro del mismo mes y temporada.</p>
-          <p className="preview-note">Vista previa: todavía no se realizan cobros.</p>
+          <p className="preview-note">{paymentMode === "stripe" ? "Pago seguro con tarjeta a través de Stripe. Tu lugar queda confirmado al recibir el anticipo." : paymentMode === "demo" ? "Vista previa: todavía no se realizan cobros." : "Los pagos estarán disponibles próximamente."}</p>
         </div>
       )}
       {status && <p className="form-status" role="alert">{status}</p>}
