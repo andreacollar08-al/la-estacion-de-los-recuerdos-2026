@@ -1,5 +1,6 @@
 import Image from "next/image";
 import BookingForm from "@/components/booking-form";
+import PreSaleCountdown from "@/components/pre-sale-countdown";
 import SetVideo from "@/components/set-video";
 import Snow from "@/components/snow";
 import { BorderBeam, ScrollExpand, ShinyText, TiltedCard } from "@/components/visual-effects";
@@ -69,7 +70,7 @@ export default function HomePage() {
             <p className="hero-description">Sube a bordo, juega a ser maquinista y llévate 5 recuerdos editados para volver a ellos cada diciembre.</p>
             <a className="button button-wine hero-action" href="#reserva">Reserva tu sesión <ArrowIcon /></a>
             <p className="hero-note">Anticipo del 50% · Fechas limitadas · Cupos por horario</p>
-            <p className="hero-offer"><strong>NAVIDAD26</strong> $200 menos + 2 fotos extra · primeros 10 usos</p>
+            <div className="hero-offer"><p><strong>NAVIDAD26</strong> $200 menos + 2 fotos extra · primeros 10 usos</p><PreSaleCountdown /></div>
           </div>
           <div className="hero-footer" aria-label="Información de la experiencia">
             <span><PinIcon /> Palenque, Chiapas</span>

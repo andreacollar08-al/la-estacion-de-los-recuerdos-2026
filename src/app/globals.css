@@ -82,6 +82,14 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .hero-note { margin-top: 11px; color: #cfbfac; font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
 .hero-offer { max-width: 42ch; margin-top: 9px; color: var(--gold-light); font-size: 10px; line-height: 1.3; }
 .hero-offer strong { margin-right: 5px; color: #f4ddab; font-size: 9px; letter-spacing: .14em; }
+.pre-sale-countdown { margin-top: 14px; padding-top: 11px; border-top: 1px solid rgba(231, 201, 148, .52); }
+.pre-sale-label { color: #f2e4d2; font-size: 10px; font-weight: 600; letter-spacing: .17em; text-transform: uppercase; }
+.pre-sale-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin-top: 8px; }
+.pre-sale-unit { min-width: 0; padding: 6px 4px 5px; display: grid; gap: 3px; border: 1px solid rgba(231, 201, 148, .32); background: rgba(21, 19, 17, .35); text-align: center; }
+.pre-sale-unit strong { margin: 0; color: var(--paper-light); font-family: var(--display); font-size: 22px; font-variant-numeric: tabular-nums; font-weight: 400; letter-spacing: .03em; line-height: 1; }
+.pre-sale-unit small { color: var(--gold-light); font-size: 7px; letter-spacing: .12em; text-transform: uppercase; }
+.pre-sale-date { display: block; margin-top: 7px; color: #cfbfac; font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
+.pre-sale-countdown.is-ended { color: #f2e4d2; }
 .hero-footer { position: absolute; z-index: 1; right: 0; bottom: 0; left: 0; width: var(--shell); margin-inline: auto; min-height: 42px; display: flex; align-items: center; gap: 28px; border-top: 1px solid rgba(235, 211, 154, .4); color: #e5d9c8; font-size: 9px; letter-spacing: .08em; text-transform: uppercase; }
 .hero-footer span { display: inline-flex; align-items: center; gap: 6px; }
 
@@ -580,6 +588,13 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .hero-note { margin: 13px auto 0; font-size: clamp(10px, 1.7vw, 12px); text-align: center; }
   .hero-offer { margin: 10px auto 0; font-size: clamp(10px, 1.7vw, 12px); text-align: center; }
   .hero-offer strong { font-size: clamp(9px, 1.6vw, 11px); }
+  .pre-sale-countdown { margin-top: 13px; padding-top: 10px; }
+  .pre-sale-label { font-size: clamp(10px, 1.7vw, 12px); }
+  .pre-sale-grid { gap: 4px; margin-top: 7px; }
+  .pre-sale-unit { padding: 6px 2px 5px; }
+  .pre-sale-unit strong { font-size: clamp(18px, 4.5vw, 26px); }
+  .pre-sale-unit small { font-size: clamp(7px, 1.4vw, 9px); }
+  .pre-sale-date { margin-top: 6px; font-size: clamp(8px, 1.4vw, 10px); }
   .hero-footer { min-height: 48px; justify-content: center; gap: 6px 15px; padding-block: 8px; font-size: clamp(9px, 1.6vw, 11px); text-align: center; }
   .micro-icon { width: 14px; height: 14px; }
 
