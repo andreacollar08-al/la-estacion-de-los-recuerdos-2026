@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 
-const PRE_SALE_END = "2026-10-20T23:59:59-06:00";
+const PRE_SALE_END = "2026-09-25T23:59:59-06:00";
 const PRE_SALE_END_MS = Date.parse(PRE_SALE_END);
 
 type Remaining = {
@@ -57,7 +57,7 @@ export default function PreSaleCountdown() {
           ))}
         </div>
       )}
-      <time className="pre-sale-date" dateTime={PRE_SALE_END}>20 OCT 2026 · 23:59</time>
+      <time className="pre-sale-date" dateTime={PRE_SALE_END}>25 SEP 2026 · 23:59</time>
     </aside>
   );
 }
