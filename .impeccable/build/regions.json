@@ -1,0 +1,157 @@
+{
+  "regions": [
+    {
+      "id": "hero-photo",
+      "kind": "image",
+      "grid": "A0:J2",
+      "note": "cinematic Victorian steam locomotive arriving at a snowy warm-lit station, with lanterns and luggage",
+      "bleed": true
+    },
+    {
+      "id": "hero-brand",
+      "kind": "text",
+      "grid": "B0:D0",
+      "note": "RUBIEL PHOTO ART masthead text",
+      "codeDrawn": true
+    },
+    {
+      "id": "hero-station-sign",
+      "kind": "plate",
+      "grid": "D0:F0",
+      "note": "small dark station sign naming La Estación de los Recuerdos",
+      "bleed": true
+    },
+    {
+      "id": "parchment-texture",
+      "kind": "texture",
+      "grid": "J6:J6",
+      "note": "clean warm antique parchment grain with no ink"
+    },
+    {
+      "id": "station-line-art",
+      "kind": "plate",
+      "grid": "A3:C4",
+      "note": "faint engraved Victorian station line drawing on parchment",
+      "bleed": true
+    },
+    {
+      "id": "campaign-stamp",
+      "kind": "chrome",
+      "grid": "I3:J4",
+      "note": "faint circular Navidad 2026 campaign stamp drawn as CSS border and text",
+      "codeDrawn": true
+    },
+    {
+      "id": "campaign-kicker",
+      "kind": "text",
+      "grid": "C3:H3",
+      "note": "small centered RUBIEL PHOTO ART campaign kicker",
+      "codeDrawn": true
+    },
+    {
+      "id": "campaign-title",
+      "kind": "text",
+      "grid": "C3:H3",
+      "note": "large two-line title LA ESTACIÓN DE LOS RECUERDOS",
+      "codeDrawn": true
+    },
+    {
+      "id": "campaign-promise",
+      "kind": "text",
+      "grid": "B4:I4",
+      "note": "two-line emotional promise about Christmas passing and family memories remaining",
+      "codeDrawn": true
+    },
+    {
+      "id": "price-ticket",
+      "kind": "chrome",
+      "grid": "B5:I5",
+      "note": "wide cream railway ticket outline with center divider and clipped side notches",
+      "codeDrawn": true
+    },
+    {
+      "id": "regular-price",
+      "kind": "text",
+      "grid": "B5:E5",
+      "note": "October regular price $1,800 MXN with short label",
+      "codeDrawn": true
+    },
+    {
+      "id": "deposit-price",
+      "kind": "text",
+      "grid": "F5:I5",
+      "note": "50 percent deposit $900 MXN with short reassurance",
+      "codeDrawn": true
+    },
+    {
+      "id": "primary-cta",
+      "kind": "control",
+      "grid": "C6:H6",
+      "note": "large wine railway-ticket button Elegir mi horario with arrow",
+      "codeDrawn": true
+    },
+    {
+      "id": "secondary-cta",
+      "kind": "control",
+      "grid": "D6:G6",
+      "note": "underlined text link Ver fechas de octubre",
+      "codeDrawn": true
+    },
+    {
+      "id": "journey-band",
+      "kind": "chrome",
+      "grid": "A7:J7",
+      "note": "full-width dark espresso itinerary band with a thin brass rail line and four stops",
+      "codeDrawn": true
+    },
+    {
+      "id": "journey-copy",
+      "kind": "text",
+      "grid": "C7:H7",
+      "note": "journey heading and four concise steps: reserva, vive, disfruta, atesora",
+      "codeDrawn": true
+    },
+    {
+      "id": "gallery-heading",
+      "kind": "text",
+      "grid": "D8:G8",
+      "note": "centered gallery heading and proof-oriented subtitle",
+      "codeDrawn": true
+    },
+    {
+      "id": "gallery-photo-one",
+      "kind": "image",
+      "grid": "A8:C9",
+      "note": "warm Christmas lantern and family-memory detail photograph",
+      "bleed": true
+    },
+    {
+      "id": "gallery-photo-two",
+      "kind": "image",
+      "grid": "C8:E9",
+      "note": "vintage luggage and snowy station detail photograph",
+      "bleed": true
+    },
+    {
+      "id": "gallery-photo-three",
+      "kind": "image",
+      "grid": "F8:H9",
+      "note": "station clock and warm light detail photograph",
+      "bleed": true
+    },
+    {
+      "id": "gallery-photo-four",
+      "kind": "image",
+      "grid": "H8:J9",
+      "note": "Christmas greenery and keepsake luggage-tag detail photograph",
+      "bleed": true
+    },
+    {
+      "id": "closing-rule",
+      "kind": "chrome",
+      "grid": "A9:J9",
+      "note": "dark closing strip with small gold brand values separated by centered dots",
+      "codeDrawn": true
+    }
+  ]
+}

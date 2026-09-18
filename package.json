@@ -1,0 +1,49 @@
+{
+  "name": "la-estacion-de-los-recuerdos-2026",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint .",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev:vinext": "vinext dev --port 3001",
+    "build:vinext": "vinext build",
+    "start:vinext": "wrangler dev --config dist/server/wrangler.json",
+    "deploy:vinext": "vinext-cloudflare deploy --config dist/server/wrangler.json"
+  },
+  "dependencies": {
+    "@vinext/cloudflare": "^1.0.0-beta.8",
+    "better-sqlite3": "^13.0.3",
+    "next": "16.3.5",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "resend": "^6.28.1",
+    "stripe": "^22.6.2",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@cloudflare/vite-plugin": "^1.37.1",
+    "@cloudflare/workers-types": "^4.20260515.1",
+    "@types/better-sqlite3": "^7.6.13",
+    "@types/node": "^24.10.0",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@vitejs/plugin-react": "^6.1.1",
+    "@vitejs/plugin-rsc": "^0.5.26",
+    "eslint": "^9.39.1",
+    "eslint-config-next": "16.3.5",
+    "react-server-dom-webpack": "^19.2.6",
+    "typescript": "^5.9.3",
+    "vinext": "^1.0.0-beta.5",
+    "vite": "^8.0.13",
+    "vitest": "^3.2.7",
+    "wrangler": "^4.92.0"
+  },
+  "engines": {
+    "node": ">=20.9.0"
+  },
+  "type": "module"
+}

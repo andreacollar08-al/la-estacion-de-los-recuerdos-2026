@@ -1,0 +1,1347 @@
+{
+  "tool": "comp-spec",
+  "version": 1,
+  "createdAt": "2026-09-17T07:02:48.919Z",
+  "comp": ".impeccable/mocks/comp-01-itinerario.png",
+  "warnings": [
+    "region hero-photo: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region hero-brand: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region hero-station-sign: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region station-line-art: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region campaign-stamp: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region campaign-kicker: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region campaign-title: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region campaign-promise: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region price-ticket: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region regular-price: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region deposit-price: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region primary-cta: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region secondary-cta: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region journey-band: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region journey-copy: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region gallery-heading: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)",
+    "region gallery-photo-one: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region gallery-photo-two: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region gallery-photo-three: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region gallery-photo-four: \"bleed\": true set in the regions file (the clipped-artwork refusal is overridden: the page crops it there)",
+    "region closing-rule: \"codeDrawn\": true set in the regions file (the painted-material refusal is overridden: code draws this region)"
+  ],
+  "uncoveredInkCells": [],
+  "compSize": {
+    "width": 941,
+    "height": 1672
+  },
+  "aspect": 0.5628,
+  "orientation": "portrait",
+  "palette": [
+    {
+      "hex": "#e6d5ba",
+      "coverage": 0.4316
+    },
+    {
+      "hex": "#25170d",
+      "coverage": 0.3995
+    },
+    {
+      "hex": "#523726",
+      "coverage": 0.0779
+    },
+    {
+      "hex": "#4a4344",
+      "coverage": 0.048
+    },
+    {
+      "hex": "#7b573d",
+      "coverage": 0.043
+    }
+  ],
+  "bands": [
+    {
+      "y": 0.207,
+      "strength": 0.2626
+    },
+    {
+      "y": 0.3172,
+      "strength": 0.2993
+    },
+    {
+      "y": 0.3656,
+      "strength": 0.26
+    },
+    {
+      "y": 0.3877,
+      "strength": 0.2058
+    },
+    {
+      "y": 0.4317,
+      "strength": 0.663
+    },
+    {
+      "y": 0.4537,
+      "strength": 0.2479
+    },
+    {
+      "y": 0.489,
+      "strength": 0.4751
+    },
+    {
+      "y": 0.5419,
+      "strength": 0.3457
+    },
+    {
+      "y": 0.5815,
+      "strength": 0.8791
+    },
+    {
+      "y": 0.6035,
+      "strength": 0.2321
+    },
+    {
+      "y": 0.63,
+      "strength": 0.6693
+    },
+    {
+      "y": 0.6696,
+      "strength": 1
+    },
+    {
+      "y": 0.7269,
+      "strength": 0.4309
+    },
+    {
+      "y": 0.8062,
+      "strength": 1
+    },
+    {
+      "y": 0.8458,
+      "strength": 1
+    },
+    {
+      "y": 0.9559,
+      "strength": 1
+    },
+    {
+      "y": 0.9868,
+      "strength": 0.2002
+    }
+  ],
+  "regions": [
+    {
+      "id": "hero-photo",
+      "kind": "image",
+      "note": "cinematic Victorian steam locomotive arriving at a snowy warm-lit station, with lanterns and luggage",
+      "grid": "A0:J2",
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 0.3
+      },
+      "px": {
+        "x": 0,
+        "y": 0,
+        "w": 941,
+        "h": 502
+      },
+      "aspect": 1.8745,
+      "palette": [
+        {
+          "hex": "#1c1210",
+          "coverage": 0.3414
+        },
+        {
+          "hex": "#3c281b",
+          "coverage": 0.2876
+        },
+        {
+          "hex": "#6e4c35",
+          "coverage": 0.1343
+        },
+        {
+          "hex": "#4a4345",
+          "coverage": 0.1278
+        },
+        {
+          "hex": "#977f77",
+          "coverage": 0.109
+        }
+      ],
+      "detail": {
+        "energy": 42.1034
+      },
+      "medium": "raster",
+      "plate": "assets/plates/hero-photo.png",
+      "text": null
+    },
+    {
+      "id": "hero-brand",
+      "kind": "text",
+      "note": "RUBIEL PHOTO ART masthead text",
+      "grid": "B0:D0",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.1,
+        "y": 0,
+        "w": 0.3,
+        "h": 0.1
+      },
+      "px": {
+        "x": 94,
+        "y": 0,
+        "w": 282,
+        "h": 167
+      },
+      "aspect": 1.6886,
+      "palette": [
+        {
+          "hex": "#2e1f10",
+          "coverage": 0.4301
+        },
+        {
+          "hex": "#1c0d0d",
+          "coverage": 0.354
+        },
+        {
+          "hex": "#5e3d25",
+          "coverage": 0.1377
+        },
+        {
+          "hex": "#997355",
+          "coverage": 0.0542
+        },
+        {
+          "hex": "#bf966b",
+          "coverage": 0.0239
+        }
+      ],
+      "detail": {
+        "energy": 29.6679
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "hero-station-sign",
+      "kind": "plate",
+      "note": "small dark station sign naming La Estación de los Recuerdos",
+      "grid": "D0:F0",
+      "bleed": true,
+      "box": {
+        "x": 0.3,
+        "y": 0,
+        "w": 0.3,
+        "h": 0.1
+      },
+      "px": {
+        "x": 282,
+        "y": 0,
+        "w": 282,
+        "h": 167
+      },
+      "aspect": 1.6886,
+      "palette": [
+        {
+          "hex": "#1d120f",
+          "coverage": 0.4312
+        },
+        {
+          "hex": "#3d2619",
+          "coverage": 0.2669
+        },
+        {
+          "hex": "#575151",
+          "coverage": 0.1605
+        },
+        {
+          "hex": "#6b4931",
+          "coverage": 0.081
+        },
+        {
+          "hex": "#433c48",
+          "coverage": 0.0604
+        }
+      ],
+      "detail": {
+        "energy": 26.6845
+      },
+      "medium": "raster",
+      "plate": "assets/plates/hero-station-sign.png",
+      "text": null
+    },
+    {
+      "id": "parchment-texture",
+      "kind": "texture",
+      "note": "clean warm antique parchment grain with no ink",
+      "grid": "J6:J6",
+      "box": {
+        "x": 0.9,
+        "y": 0.6,
+        "w": 0.1,
+        "h": 0.1
+      },
+      "px": {
+        "x": 847,
+        "y": 1003,
+        "w": 94,
+        "h": 167
+      },
+      "aspect": 0.5629,
+      "palette": [
+        {
+          "hex": "#e6d4b8",
+          "coverage": 0.7143
+        },
+        {
+          "hex": "#28180b",
+          "coverage": 0.2679
+        },
+        {
+          "hex": "#bc9861",
+          "coverage": 0.0179
+        }
+      ],
+      "detail": {
+        "energy": 2.2587
+      },
+      "medium": "raster",
+      "plate": "assets/plates/parchment-texture.png",
+      "text": null
+    },
+    {
+      "id": "station-line-art",
+      "kind": "plate",
+      "note": "faint engraved Victorian station line drawing on parchment",
+      "grid": "A3:C4",
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0.3,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 502,
+        "w": 282,
+        "h": 334
+      },
+      "aspect": 0.8443,
+      "palette": [
+        {
+          "hex": "#e3d1b5",
+          "coverage": 0.9122
+        },
+        {
+          "hex": "#654d3f",
+          "coverage": 0.0288
+        },
+        {
+          "hex": "#948075",
+          "coverage": 0.0237
+        },
+        {
+          "hex": "#c0a893",
+          "coverage": 0.0195
+        },
+        {
+          "hex": "#d7bf8f",
+          "coverage": 0.0158
+        }
+      ],
+      "detail": {
+        "energy": 16.6058
+      },
+      "medium": "raster",
+      "plate": "assets/plates/station-line-art.png",
+      "text": null
+    },
+    {
+      "id": "campaign-stamp",
+      "kind": "chrome",
+      "note": "faint circular Navidad 2026 campaign stamp drawn as CSS border and text",
+      "grid": "I3:J4",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.8,
+        "y": 0.3,
+        "w": 0.2,
+        "h": 0.2
+      },
+      "px": {
+        "x": 753,
+        "y": 502,
+        "w": 188,
+        "h": 334
+      },
+      "aspect": 0.5629,
+      "palette": [
+        {
+          "hex": "#e6d5b7",
+          "coverage": 0.8919
+        },
+        {
+          "hex": "#6d5f5b",
+          "coverage": 0.0396
+        },
+        {
+          "hex": "#c1a890",
+          "coverage": 0.0386
+        },
+        {
+          "hex": "#443b36",
+          "coverage": 0.0163
+        },
+        {
+          "hex": "#d2b585",
+          "coverage": 0.0135
+        }
+      ],
+      "detail": {
+        "energy": 7.5804
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "campaign-kicker",
+      "kind": "text",
+      "note": "small centered RUBIEL PHOTO ART campaign kicker",
+      "grid": "C3:H3",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.3,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "px": {
+        "x": 188,
+        "y": 502,
+        "w": 565,
+        "h": 167
+      },
+      "aspect": 3.3832,
+      "palette": [
+        {
+          "hex": "#e8d9c0",
+          "coverage": 0.8716
+        },
+        {
+          "hex": "#311408",
+          "coverage": 0.0556
+        },
+        {
+          "hex": "#492a13",
+          "coverage": 0.0308
+        },
+        {
+          "hex": "#b1987b",
+          "coverage": 0.0242
+        },
+        {
+          "hex": "#836b54",
+          "coverage": 0.0179
+        }
+      ],
+      "detail": {
+        "energy": 45.5106
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 24,
+          "capHeightPx": 50.2,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5446,
+          "advTall": 0.5536,
+          "advX": 0.5638,
+          "gap": 0.0902,
+          "xRatio": 0.828,
+          "stemW": 0.1237,
+          "contrast": 1.7894,
+          "serif": 2.145,
+          "densTall": 0.4093,
+          "densX": 0.4617,
+          "weight": 0.4093
+        },
+        "widthClass": "condensed",
+        "weightClass": "regular",
+        "chosen": {
+          "family": "Atma",
+          "weight": 400,
+          "fontSizePx": 63,
+          "source": "index",
+          "fp": {
+            "lines": 1,
+            "glyphs": 11,
+            "capHeightPx": 50,
+            "inkIsDark": true,
+            "allCaps": false,
+            "advance": 0.5898,
+            "advTall": 0.5898,
+            "advX": null,
+            "gap": 0.1399,
+            "xRatio": 0.5224,
+            "stemW": 0.112,
+            "contrast": 1.1437,
+            "serif": 0.9945,
+            "densTall": 0.3976,
+            "densX": null,
+            "weight": 0.3976
+          },
+          "stamp": "c882096a35a3"
+        }
+      }
+    },
+    {
+      "id": "campaign-title",
+      "kind": "text",
+      "note": "large two-line title LA ESTACIÓN DE LOS RECUERDOS",
+      "grid": "C3:H3",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.3,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "px": {
+        "x": 188,
+        "y": 502,
+        "w": 565,
+        "h": 167
+      },
+      "aspect": 3.3832,
+      "palette": [
+        {
+          "hex": "#e8d9c0",
+          "coverage": 0.8716
+        },
+        {
+          "hex": "#311408",
+          "coverage": 0.0556
+        },
+        {
+          "hex": "#492a13",
+          "coverage": 0.0308
+        },
+        {
+          "hex": "#b1987b",
+          "coverage": 0.0242
+        },
+        {
+          "hex": "#836b54",
+          "coverage": 0.0179
+        }
+      ],
+      "detail": {
+        "energy": 45.5106
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 24,
+          "capHeightPx": 50.2,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.5446,
+          "advTall": 0.5536,
+          "advX": 0.5638,
+          "gap": 0.0902,
+          "xRatio": 0.828,
+          "stemW": 0.1237,
+          "contrast": 1.7894,
+          "serif": 2.145,
+          "densTall": 0.4093,
+          "densX": 0.4617,
+          "weight": 0.4093
+        },
+        "widthClass": "condensed",
+        "weightClass": "regular",
+        "chosen": {
+          "family": "Atma",
+          "weight": 400,
+          "fontSizePx": 54,
+          "source": "index",
+          "fp": {
+            "lines": 1,
+            "glyphs": 22,
+            "capHeightPx": 51.2,
+            "inkIsDark": true,
+            "allCaps": false,
+            "advance": 0.469,
+            "advTall": 0.5472,
+            "advX": 0.469,
+            "gap": 0.0977,
+            "xRatio": 0.785,
+            "stemW": 0.099,
+            "contrast": 1.1627,
+            "serif": 0.9799,
+            "densTall": 0.3467,
+            "densX": 0.4055,
+            "weight": 0.3467
+          },
+          "stamp": "f850022ce09d"
+        }
+      }
+    },
+    {
+      "id": "campaign-promise",
+      "kind": "text",
+      "note": "two-line emotional promise about Christmas passing and family memories remaining",
+      "grid": "B4:I4",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.1,
+        "y": 0.4,
+        "w": 0.8,
+        "h": 0.1
+      },
+      "px": {
+        "x": 94,
+        "y": 669,
+        "w": 753,
+        "h": 167
+      },
+      "aspect": 4.509,
+      "palette": [
+        {
+          "hex": "#e7d7bd",
+          "coverage": 0.8877
+        },
+        {
+          "hex": "#1e0e0b",
+          "coverage": 0.0446
+        },
+        {
+          "hex": "#d3bd92",
+          "coverage": 0.0393
+        },
+        {
+          "hex": "#6a5646",
+          "coverage": 0.0142
+        },
+        {
+          "hex": "#b9986b",
+          "coverage": 0.0141
+        }
+      ],
+      "detail": {
+        "energy": 40.2566
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 65,
+          "capHeightPx": 24.8,
+          "inkIsDark": true,
+          "allCaps": false,
+          "advance": 0.6017,
+          "advTall": 0.4879,
+          "advX": 0.6017,
+          "gap": 0.0926,
+          "xRatio": 0.6534,
+          "stemW": 0.1558,
+          "contrast": 1.9401,
+          "serif": 1.3566,
+          "densTall": 0.4456,
+          "densX": 0.4337,
+          "weight": 0.4456
+        },
+        "widthClass": "normal",
+        "weightClass": "regular"
+      }
+    },
+    {
+      "id": "price-ticket",
+      "kind": "chrome",
+      "note": "wide cream railway ticket outline with center divider and clipped side notches",
+      "grid": "B5:I5",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.1,
+        "y": 0.5,
+        "w": 0.8,
+        "h": 0.1
+      },
+      "px": {
+        "x": 94,
+        "y": 836,
+        "w": 753,
+        "h": 167
+      },
+      "aspect": 4.509,
+      "palette": [
+        {
+          "hex": "#e5d0b0",
+          "coverage": 0.7929
+        },
+        {
+          "hex": "#571818",
+          "coverage": 0.1129
+        },
+        {
+          "hex": "#1e0e08",
+          "coverage": 0.039
+        },
+        {
+          "hex": "#93673c",
+          "coverage": 0.0306
+        },
+        {
+          "hex": "#c1a681",
+          "coverage": 0.0246
+        }
+      ],
+      "detail": {
+        "energy": 37.4518
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "regular-price",
+      "kind": "text",
+      "note": "October regular price $1,800 MXN with short label",
+      "grid": "B5:E5",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.1,
+        "y": 0.5,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "px": {
+        "x": 94,
+        "y": 836,
+        "w": 376,
+        "h": 167
+      },
+      "aspect": 2.2515,
+      "palette": [
+        {
+          "hex": "#e4cfaf",
+          "coverage": 0.7966
+        },
+        {
+          "hex": "#571817",
+          "coverage": 0.1122
+        },
+        {
+          "hex": "#1e0e08",
+          "coverage": 0.0376
+        },
+        {
+          "hex": "#92663b",
+          "coverage": 0.0316
+        },
+        {
+          "hex": "#c3a783",
+          "coverage": 0.022
+        }
+      ],
+      "detail": {
+        "energy": 29.9503
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 9,
+          "capHeightPx": 33.1,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.6533,
+          "advTall": 0.6667,
+          "advX": null,
+          "gap": 0.08,
+          "xRatio": null,
+          "stemW": 0.1575,
+          "contrast": 1.5128,
+          "serif": null,
+          "densTall": 0.5256,
+          "densX": null,
+          "weight": 0.5256
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "deposit-price",
+      "kind": "text",
+      "note": "50 percent deposit $900 MXN with short reassurance",
+      "grid": "F5:I5",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.5,
+        "y": 0.5,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "px": {
+        "x": 471,
+        "y": 836,
+        "w": 376,
+        "h": 167
+      },
+      "aspect": 2.2515,
+      "palette": [
+        {
+          "hex": "#e5d1b1",
+          "coverage": 0.7882
+        },
+        {
+          "hex": "#571818",
+          "coverage": 0.1135
+        },
+        {
+          "hex": "#1d0e09",
+          "coverage": 0.0373
+        },
+        {
+          "hex": "#c3aa89",
+          "coverage": 0.0343
+        },
+        {
+          "hex": "#977347",
+          "coverage": 0.0267
+        }
+      ],
+      "detail": {
+        "energy": 30.653
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": {
+          "lines": 2,
+          "glyphs": 8,
+          "capHeightPx": 34.5,
+          "inkIsDark": true,
+          "allCaps": true,
+          "advance": 0.65,
+          "advTall": 0.7,
+          "advX": null,
+          "gap": 0.1,
+          "xRatio": null,
+          "stemW": 0.1417,
+          "contrast": 1.3429,
+          "serif": null,
+          "densTall": 0.5122,
+          "densX": null,
+          "weight": 0.5122
+        },
+        "widthClass": "normal",
+        "weightClass": "medium"
+      }
+    },
+    {
+      "id": "primary-cta",
+      "kind": "control",
+      "note": "large wine railway-ticket button Elegir mi horario with arrow",
+      "grid": "C6:H6",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.6,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "px": {
+        "x": 188,
+        "y": 1003,
+        "w": 565,
+        "h": 167
+      },
+      "aspect": 3.3832,
+      "palette": [
+        {
+          "hex": "#e7d7bc",
+          "coverage": 0.4204
+        },
+        {
+          "hex": "#581817",
+          "coverage": 0.2687
+        },
+        {
+          "hex": "#27180a",
+          "coverage": 0.2684
+        },
+        {
+          "hex": "#be9964",
+          "coverage": 0.0267
+        },
+        {
+          "hex": "#a57c5c",
+          "coverage": 0.0157
+        }
+      ],
+      "detail": {
+        "energy": 29.5636
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "secondary-cta",
+      "kind": "control",
+      "note": "underlined text link Ver fechas de octubre",
+      "grid": "D6:G6",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.3,
+        "y": 0.6,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "px": {
+        "x": 282,
+        "y": 1003,
+        "w": 376,
+        "h": 167
+      },
+      "aspect": 2.2515,
+      "palette": [
+        {
+          "hex": "#e6d6bd",
+          "coverage": 0.4033
+        },
+        {
+          "hex": "#581818",
+          "coverage": 0.2769
+        },
+        {
+          "hex": "#26180a",
+          "coverage": 0.2696
+        },
+        {
+          "hex": "#bf9965",
+          "coverage": 0.0296
+        },
+        {
+          "hex": "#a47c5b",
+          "coverage": 0.0206
+        }
+      ],
+      "detail": {
+        "energy": 35.0373
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "journey-band",
+      "kind": "chrome",
+      "note": "full-width dark espresso itinerary band with a thin brass rail line and four stops",
+      "grid": "A7:J7",
+      "codeDrawn": true,
+      "box": {
+        "x": 0,
+        "y": 0.7,
+        "w": 1,
+        "h": 0.1
+      },
+      "px": {
+        "x": 0,
+        "y": 1170,
+        "w": 941,
+        "h": 167
+      },
+      "aspect": 5.6347,
+      "palette": [
+        {
+          "hex": "#271809",
+          "coverage": 0.9357
+        },
+        {
+          "hex": "#826848",
+          "coverage": 0.0239
+        },
+        {
+          "hex": "#c09965",
+          "coverage": 0.0179
+        },
+        {
+          "hex": "#54412f",
+          "coverage": 0.0168
+        },
+        {
+          "hex": "#beae92",
+          "coverage": 0.0057
+        }
+      ],
+      "detail": {
+        "energy": 17.6527
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    },
+    {
+      "id": "journey-copy",
+      "kind": "text",
+      "note": "journey heading and four concise steps: reserva, vive, disfruta, atesora",
+      "grid": "C7:H7",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.7,
+        "w": 0.6,
+        "h": 0.1
+      },
+      "px": {
+        "x": 188,
+        "y": 1170,
+        "w": 565,
+        "h": 167
+      },
+      "aspect": 3.3832,
+      "palette": [
+        {
+          "hex": "#271809",
+          "coverage": 0.9339
+        },
+        {
+          "hex": "#826849",
+          "coverage": 0.028
+        },
+        {
+          "hex": "#c19965",
+          "coverage": 0.0168
+        },
+        {
+          "hex": "#544331",
+          "coverage": 0.0143
+        },
+        {
+          "hex": "#ae9e84",
+          "coverage": 0.007
+        }
+      ],
+      "detail": {
+        "energy": 17.1633
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-17T07:03:08.173Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "gallery-heading",
+      "kind": "text",
+      "note": "centered gallery heading and proof-oriented subtitle",
+      "grid": "D8:G8",
+      "codeDrawn": true,
+      "box": {
+        "x": 0.3,
+        "y": 0.8,
+        "w": 0.4,
+        "h": 0.1
+      },
+      "px": {
+        "x": 282,
+        "y": 1338,
+        "w": 376,
+        "h": 167
+      },
+      "aspect": 2.2515,
+      "palette": [
+        {
+          "hex": "#e9d9c4",
+          "coverage": 0.4568
+        },
+        {
+          "hex": "#472f24",
+          "coverage": 0.2184
+        },
+        {
+          "hex": "#1d120c",
+          "coverage": 0.2126
+        },
+        {
+          "hex": "#8c6449",
+          "coverage": 0.0597
+        },
+        {
+          "hex": "#b88c59",
+          "coverage": 0.0524
+        }
+      ],
+      "detail": {
+        "energy": 36.2767
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null,
+      "type": {
+        "comp": null,
+        "measuredAt": "2026-09-17T07:03:08.228Z",
+        "note": "no separable lettering in the crop; size by the region box"
+      }
+    },
+    {
+      "id": "gallery-photo-one",
+      "kind": "image",
+      "note": "warm Christmas lantern and family-memory detail photograph",
+      "grid": "A8:C9",
+      "bleed": true,
+      "box": {
+        "x": 0,
+        "y": 0.8,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 0,
+        "y": 1338,
+        "w": 282,
+        "h": 334
+      },
+      "aspect": 0.8443,
+      "palette": [
+        {
+          "hex": "#24170b",
+          "coverage": 0.4493
+        },
+        {
+          "hex": "#e9d9c3",
+          "coverage": 0.3279
+        },
+        {
+          "hex": "#a57b5c",
+          "coverage": 0.1062
+        },
+        {
+          "hex": "#482c16",
+          "coverage": 0.0842
+        },
+        {
+          "hex": "#6f5345",
+          "coverage": 0.0323
+        }
+      ],
+      "detail": {
+        "energy": 28.0362
+      },
+      "medium": "raster",
+      "plate": "assets/plates/gallery-photo-one.png",
+      "text": null
+    },
+    {
+      "id": "gallery-photo-two",
+      "kind": "image",
+      "note": "vintage luggage and snowy station detail photograph",
+      "grid": "C8:E9",
+      "bleed": true,
+      "box": {
+        "x": 0.2,
+        "y": 0.8,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 188,
+        "y": 1338,
+        "w": 282,
+        "h": 334
+      },
+      "aspect": 0.8443,
+      "palette": [
+        {
+          "hex": "#29190d",
+          "coverage": 0.3704
+        },
+        {
+          "hex": "#e8d9c3",
+          "coverage": 0.3026
+        },
+        {
+          "hex": "#533628",
+          "coverage": 0.1601
+        },
+        {
+          "hex": "#8d664b",
+          "coverage": 0.1312
+        },
+        {
+          "hex": "#988682",
+          "coverage": 0.0358
+        }
+      ],
+      "detail": {
+        "energy": 30.6404
+      },
+      "medium": "raster",
+      "plate": "assets/plates/gallery-photo-two.png",
+      "text": null
+    },
+    {
+      "id": "gallery-photo-three",
+      "kind": "image",
+      "note": "station clock and warm light detail photograph",
+      "grid": "F8:H9",
+      "bleed": true,
+      "box": {
+        "x": 0.5,
+        "y": 0.8,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 471,
+        "y": 1338,
+        "w": 282,
+        "h": 334
+      },
+      "aspect": 0.8443,
+      "palette": [
+        {
+          "hex": "#24160c",
+          "coverage": 0.4322
+        },
+        {
+          "hex": "#e9d9c3",
+          "coverage": 0.2994
+        },
+        {
+          "hex": "#472c19",
+          "coverage": 0.1568
+        },
+        {
+          "hex": "#7f512b",
+          "coverage": 0.0755
+        },
+        {
+          "hex": "#423b37",
+          "coverage": 0.0361
+        }
+      ],
+      "detail": {
+        "energy": 31.072
+      },
+      "medium": "raster",
+      "plate": "assets/plates/gallery-photo-three.png",
+      "text": null
+    },
+    {
+      "id": "gallery-photo-four",
+      "kind": "image",
+      "note": "Christmas greenery and keepsake luggage-tag detail photograph",
+      "grid": "H8:J9",
+      "bleed": true,
+      "box": {
+        "x": 0.7,
+        "y": 0.8,
+        "w": 0.3,
+        "h": 0.2
+      },
+      "px": {
+        "x": 659,
+        "y": 1338,
+        "w": 282,
+        "h": 334
+      },
+      "aspect": 0.8443,
+      "palette": [
+        {
+          "hex": "#26190e",
+          "coverage": 0.4483
+        },
+        {
+          "hex": "#e9d9c2",
+          "coverage": 0.3298
+        },
+        {
+          "hex": "#9f7d64",
+          "coverage": 0.0859
+        },
+        {
+          "hex": "#473e36",
+          "coverage": 0.0821
+        },
+        {
+          "hex": "#696463",
+          "coverage": 0.0539
+        }
+      ],
+      "detail": {
+        "energy": 30.1654
+      },
+      "medium": "raster",
+      "plate": "assets/plates/gallery-photo-four.png",
+      "text": null
+    },
+    {
+      "id": "closing-rule",
+      "kind": "chrome",
+      "note": "dark closing strip with small gold brand values separated by centered dots",
+      "grid": "A9:J9",
+      "codeDrawn": true,
+      "box": {
+        "x": 0,
+        "y": 0.9,
+        "w": 1,
+        "h": 0.1
+      },
+      "px": {
+        "x": 0,
+        "y": 1505,
+        "w": 941,
+        "h": 167
+      },
+      "aspect": 5.6347,
+      "palette": [
+        {
+          "hex": "#291a0c",
+          "coverage": 0.5897
+        },
+        {
+          "hex": "#eadac0",
+          "coverage": 0.1403
+        },
+        {
+          "hex": "#a07959",
+          "coverage": 0.1381
+        },
+        {
+          "hex": "#61412a",
+          "coverage": 0.1064
+        },
+        {
+          "hex": "#6b6461",
+          "coverage": 0.0255
+        }
+      ],
+      "detail": {
+        "energy": 46.682
+      },
+      "medium": "semantic",
+      "plate": null,
+      "text": null
+    }
+  ]
+}
