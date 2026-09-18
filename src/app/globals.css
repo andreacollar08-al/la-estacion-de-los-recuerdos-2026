@@ -627,6 +627,16 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .season-link .icon { width: 16px; height: 16px; }
   .season-note { margin-top: 12px; font-size: clamp(9px, 1.7vw, 12px); }
 
+  .season-card-active { min-height: 286px; padding: 20px; }
+  .season-card-active .season-card-top { gap: 8px; font-size: clamp(18px, 4.6vw, 24px); }
+  .season-card-active .season-badge { padding: 6px 9px; font-size: clamp(9px, 1.8vw, 11px); }
+  .season-card-active > small { margin-top: 24px; font-size: clamp(11px, 2.2vw, 14px); letter-spacing: .06em; }
+  .season-card-active strong { margin-top: 18px; font-size: clamp(42px, 10.5vw, 58px); line-height: .9; }
+  .season-card-active strong small { font-size: clamp(12px, 2.6vw, 15px); }
+  .season-card-active p { margin-top: 10px; color: inherit; font-size: clamp(14px, 2.8vw, 17px); font-weight: 500; opacity: .9; }
+  .season-card-active .season-link { min-height: 54px; font-size: clamp(12px, 2.5vw, 15px); letter-spacing: .08em; }
+  .season-card-active .season-link .icon { width: 18px; height: 18px; }
+
   .memory-band { min-height: 160px; }
   .memory-band p { font-size: clamp(25px, 6vw, 39px); }
   .station { padding-block: 60px 62px; }
