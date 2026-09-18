@@ -9,6 +9,8 @@ export type PaymentReservation = ReservationInput & ReservationPricing & {
   reference: string; requestKey: string; fingerprint: string; couponApplied: boolean;
   photos: number; state: "held" | "processing" | "paid" | "expired" | "failed";
   createdAt: number; expiresAt: number; sessionId: string | null;
+  adminNote?: string;
+  photoStatus?: "pendientes" | "en_edicion" | "listas" | "entregadas";
 };
 
 export class BookingError extends Error {
@@ -19,8 +21,10 @@ type MaybePromise<T> = T | Promise<T>;
 export type PaymentStore = {
   get(reference: string): MaybePromise<PaymentReservation | undefined>;
   getBySession(id: string): MaybePromise<PaymentReservation | undefined>;
+  list(): MaybePromise<PaymentReservation[]>;
   getAvailability(): MaybePromise<Availability>;
   reserve(input: ReservationInput, key: string): MaybePromise<PaymentReservation>;
+  updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">): MaybePromise<PaymentReservation>;
   attachSession(reference: string, id: string): MaybePromise<void>;
   transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string): MaybePromise<void>;
   due(): MaybePromise<PaymentReservation[]>;
@@ -79,6 +83,7 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
   const get = (reference: string) => decode(db.prepare("SELECT data FROM payment_reservations WHERE reference = ?").get(reference));
   const getBySession = (id: string) => decode(db.prepare("SELECT data FROM payment_reservations WHERE session_id = ?").get(id));
   const all = () => db.prepare("SELECT data FROM payment_reservations").all().map((row) => decode(row)!);
+  const list = () => all().sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
   const released = (date: string): Set<string> => new Set([
     ...INITIAL_RELEASED_TIMES,
     ...(db.prepare("SELECT time FROM payment_released_slots WHERE date = ?").all(date) as { time: string }[]).map((row) => row.time),
@@ -92,6 +97,13 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
   function save(r: PaymentReservation) {
     db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, expires_at = ?, data = ? WHERE reference = ?")
       .run(r.state, r.sessionId, r.expiresAt, JSON.stringify(r), r.reference);
+  }
+  function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">) {
+    const current = get(reference);
+    if (!current) throw new BookingError("No encontramos esa reserva.", 404);
+    const updated = { ...current, ...patch };
+    save(updated);
+    return updated;
   }
   const reserve = db.transaction((raw: ReservationInput, requestKey: string) => {
     const input = reservationSchema.parse(raw);
@@ -143,12 +155,12 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     if (eventId) db.prepare("INSERT INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").run(eventId, now());
   });
   return {
-    get, getBySession, getAvailability,
+    get, getBySession, list, getAvailability, updateAdmin,
     reserve: (input: ReservationInput, key: string) => reserve.immediate(input, key),
     attachSession: (reference: string, id: string) => attachSession.immediate(reference, id),
     transition: (reference: string, id: string, state: PaymentReservation["state"], eventId?: string) => transition.immediate(reference, id, state, eventId),
     due: () => all().filter((r) => r.state === "held" && r.expiresAt <= now()),
-    close: () => db.close(),
+    close: () => { db.close(); },
   };
 }
 
@@ -180,6 +192,9 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
   }
   async function getBySession(id: string) {
     return d1Row(await db.prepare("SELECT data FROM payment_reservations WHERE session_id = ?").bind(id).first());
+  }
+  async function list() {
+    return (await all()).sort((a, b) => `${a.date}T${a.time}`.localeCompare(`${b.date}T${b.time}`));
   }
   async function reserve(raw: ReservationInput, requestKey: string) {
     const input = reservationSchema.parse(raw);
@@ -223,6 +238,14 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     await db.prepare("UPDATE payment_reservations SET session_id = ?, data = ? WHERE reference = ?")
       .bind(sessionId, JSON.stringify({ ...r, sessionId }), reference).run();
   }
+  async function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">) {
+    const current = await get(reference);
+    if (!current) throw new BookingError("No encontramos esa reserva.", 404);
+    const updated = { ...current, ...patch };
+    await db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, expires_at = ?, data = ? WHERE reference = ?")
+      .bind(updated.state, updated.sessionId, updated.expiresAt, JSON.stringify(updated), updated.reference).run();
+    return updated;
+  }
   async function transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string) {
     if (eventId) {
       const seen = await db.prepare("SELECT id FROM processed_stripe_events WHERE id = ?").bind(eventId).first();
@@ -247,7 +270,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     await db.batch(statements);
   }
   return {
-    get, getBySession, getAvailability, reserve, attachSession, transition,
+    get, getBySession, list, getAvailability, reserve, updateAdmin, attachSession, transition,
     due: async () => (await all()).filter((r) => r.state === "held" && r.expiresAt <= now()),
     close: async () => {},
   };
