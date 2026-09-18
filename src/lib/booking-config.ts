@@ -19,6 +19,13 @@ export const MAX_PEOPLE = 12;
 export const EXTRA_PERSON_PRICE = 200;
 export const REGULAR_SESSION_PRICE = 1800;
 export const VIP_SESSION_PRICE = 1600;
+export const VIP_PRE_SALE_END = "2026-09-25T23:59:59-06:00";
+export const GENERAL_PRE_SALE_END = "2026-10-05T23:59:59-06:00";
+export const VIP_PRE_SALE_END_MS = Date.parse(VIP_PRE_SALE_END);
+
+export function isVipPresaleActive(now = Date.now()) {
+  return now < VIP_PRE_SALE_END_MS;
+}
 
 export type SlotStatus = "available" | "held" | "not_open";
 export type Availability = {
@@ -26,5 +33,5 @@ export type Availability = {
   dates: ((typeof OCTOBER_DATES)[number] & {
     slots: { time: string; available: boolean; status: SlotStatus }[];
   })[];
-  coupon: { code: string; limit: number; claimed: number; available: boolean };
+  coupon: { code: string; limit: number; claimed: number; available: boolean; active: boolean };
 };

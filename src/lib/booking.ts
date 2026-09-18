@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { EXTRA_PERSON_PRICE, HOLD_DURATION_MS, INCLUDED_PEOPLE, INITIAL_RELEASED_TIMES, MAX_PEOPLE, OCTOBER_DATES, REGULAR_SESSION_PRICE, TIME_SLOTS, VIP_SESSION_PRICE, type Availability } from "./booking-config";
+import { EXTRA_PERSON_PRICE, HOLD_DURATION_MS, INCLUDED_PEOPLE, INITIAL_RELEASED_TIMES, isVipPresaleActive, MAX_PEOPLE, OCTOBER_DATES, REGULAR_SESSION_PRICE, TIME_SLOTS, VIP_SESSION_PRICE, type Availability } from "./booking-config";
 
 export { OCTOBER_DATES, TIME_SLOTS } from "./booking-config";
 
@@ -71,7 +71,7 @@ export function createBookingStore(
           }),
         };
       }),
-      coupon: { code: "NAVIDAD26", limit: 10, claimed: storage.vipClaims, available: storage.vipClaims < 10 },
+      coupon: { code: "NAVIDAD26", limit: 10, claimed: storage.vipClaims, available: isVipPresaleActive(now()) && storage.vipClaims < 10, active: isVipPresaleActive(now()) },
     };
   }
 
@@ -88,6 +88,12 @@ export function createBookingStore(
       return { ok: false as const, status: 409, error: "Ese horario acaba de ser apartado. Elige otro para continuar." };
     }
 
+    if (input.coupon && input.coupon.toUpperCase() !== "NAVIDAD26") {
+      return { ok: false as const, status: 409, error: "El cupón no es válido." };
+    }
+    if (input.coupon && !isVipPresaleActive(now())) {
+      return { ok: false as const, status: 409, error: "La preventa VIP terminó. El código y las fotos extra ya no están disponibles." };
+    }
     const couponApplied = input.coupon.toUpperCase() === "NAVIDAD26" && availability.coupon.available;
     const pricing = getReservationPricing(input.people, couponApplied);
     const reference = `RPA-${input.date.replaceAll("-", "")}-${input.time.replace(":", "")}-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;

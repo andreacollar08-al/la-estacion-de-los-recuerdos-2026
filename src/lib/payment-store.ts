@@ -3,7 +3,7 @@ import { mkdirSync } from "node:fs";
 import { dirname } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { getReservationPricing, reservationSchema, type ReservationInput, type ReservationPricing } from "./booking";
-import { HOLD_DURATION_MS, INITIAL_RELEASED_TIMES, OCTOBER_DATES, TIME_SLOTS, type Availability } from "./booking-config";
+import { HOLD_DURATION_MS, INITIAL_RELEASED_TIMES, isVipPresaleActive, OCTOBER_DATES, TIME_SLOTS, type Availability } from "./booking-config";
 
 export type PaymentReservation = ReservationInput & ReservationPricing & {
   reference: string; requestKey: string; fingerprint: string; couponApplied: boolean;
@@ -35,12 +35,13 @@ function active(r: PaymentReservation) {
   return ["held", "processing", "paid"].includes(r.state);
 }
 
-function buildAvailability(reservations: PaymentReservation[], releasedSlots: { date: string; time: string }[]): Availability {
+function buildAvailability(reservations: PaymentReservation[], releasedSlots: { date: string; time: string }[], now = Date.now()): Availability {
   const releasedByDate = new Map<string, Set<string>>();
   for (const date of OCTOBER_DATES) releasedByDate.set(date.iso, new Set(INITIAL_RELEASED_TIMES));
   for (const row of releasedSlots) releasedByDate.get(row.date)?.add(row.time);
   const current = reservations.filter(active);
   const claimed = current.filter((r) => r.couponApplied).length;
+  const vipActive = isVipPresaleActive(now);
   return {
     dates: OCTOBER_DATES.map((date) => {
       const released = releasedByDate.get(date.iso)!;
@@ -50,7 +51,7 @@ function buildAvailability(reservations: PaymentReservation[], releasedSlots: { 
         return { time, status, available: status === "available" };
       }) };
     }),
-    coupon: { code: "NAVIDAD26", limit: 10, claimed, available: claimed < 10 },
+    coupon: { code: "NAVIDAD26", limit: 10, claimed, available: vipActive && claimed < 10, active: vipActive },
   };
 }
 
@@ -86,7 +87,7 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     const releasedSlots = OCTOBER_DATES.flatMap((date) => [...released(date.iso)]
       .filter((time) => !INITIAL_RELEASED_TIMES.includes(time as typeof INITIAL_RELEASED_TIMES[number]))
       .map((time) => ({ date: date.iso, time })));
-    return buildAvailability(all(), releasedSlots);
+    return buildAvailability(all(), releasedSlots, now());
   };
   function save(r: PaymentReservation) {
     db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, expires_at = ?, data = ? WHERE reference = ?")
@@ -106,6 +107,7 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     const slot = availability.dates.find((d) => d.iso === input.date)?.slots.find((s) => s.time === input.time);
     if (!slot?.available) throw new BookingError("Ese horario no está disponible. Selecciona otro.");
     if (input.coupon && input.coupon !== "NAVIDAD26") throw new BookingError("El cupón no es válido.");
+    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
     if (input.coupon && !availability.coupon.available) throw new BookingError("Los cupones VIP se agotaron. Revisa el precio antes de continuar.");
     const couponApplied = input.coupon === "NAVIDAD26";
     const reservation: PaymentReservation = {
@@ -172,7 +174,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     const result = await db.prepare("SELECT date, time FROM payment_released_slots").all<{ date: string; time: string }>();
     return result.results;
   }
-  async function getAvailability() { return buildAvailability(await all(), await released()); }
+  async function getAvailability() { return buildAvailability(await all(), await released(), now()); }
   async function get(reference: string) {
     return d1Row(await db.prepare("SELECT data FROM payment_reservations WHERE reference = ?").bind(reference).first());
   }
@@ -193,6 +195,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     const slot = availability.dates.find((d) => d.iso === input.date)?.slots.find((s) => s.time === input.time);
     if (!slot?.available) throw new BookingError("Ese horario no está disponible. Selecciona otro.");
     if (input.coupon && input.coupon !== "NAVIDAD26") throw new BookingError("El cupón no es válido.");
+    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
     if (input.coupon && !availability.coupon.available) throw new BookingError("Los cupones VIP se agotaron. Revisa el precio antes de continuar.");
     const couponApplied = input.coupon === "NAVIDAD26";
     const reservation: PaymentReservation = {

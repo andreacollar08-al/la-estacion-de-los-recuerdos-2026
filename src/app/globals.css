@@ -247,6 +247,8 @@ input, select { min-width: 0; caret-color: var(--wine); }
 input::placeholder { color: var(--muted); }
 input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outline-offset: 1px; }
 .coupon-field { margin-top: 17px; }
+.coupon-disabled { padding: 11px 13px; border: 1px solid rgba(123, 37, 41, .25); background: rgba(123, 37, 41, .06); }
+.coupon-disabled p { color: var(--brown); font-size: 11px; line-height: 1.4; }
 .coupon-field label span { color: var(--muted); font-weight: 400; }
 .coupon-row { display: flex; gap: 6px; margin-top: 5px; }
 .coupon-row input { flex: 1; margin: 0; }
@@ -549,6 +551,7 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .text-button { min-height: 48px; padding: 9px; font-size: clamp(13px, 2.5vw, 16px); }
   .fields-grid { gap: 16px; }
   .fields-grid label, .coupon-field > label { font-size: clamp(13px, 2.6vw, 16px); }
+  .coupon-disabled p { font-size: clamp(13px, 2.6vw, 16px); }
   .fields-grid input, .fields-grid select, .coupon-row input { min-height: 54px; padding: 12px 13px; }
   .people-field small { margin-top: 7px; font-size: clamp(12px, 2.3vw, 14px); }
   .coupon-field { margin-top: 22px; }
@@ -707,6 +710,7 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .text-button { min-height: 48px; font-size: clamp(11px, 1.9vw, 14px); }
   .fields-grid { gap: 13px; }
   .fields-grid label, .coupon-field > label { font-size: clamp(11px, 2vw, 14px); }
+  .coupon-disabled p { font-size: clamp(11px, 2vw, 14px); }
   .fields-grid input, .fields-grid select, .coupon-row input { min-height: 50px; padding: 10px 11px; }
   .people-field small { font-size: clamp(10px, 1.8vw, 12px); }
   .coupon-field { margin-top: 17px; }

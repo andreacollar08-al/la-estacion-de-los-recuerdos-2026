@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { EXTRA_PERSON_PRICE, INCLUDED_PEOPLE, INITIAL_RELEASED_TIMES, MAX_PEOPLE, OCTOBER_DATES, TIME_SLOTS, type Availability } from "@/lib/booking-config";
 import { getReservationPricing, type ReservationInput } from "@/lib/booking";
+import { usePresalePhase } from "@/components/pre-sale-countdown";
 import { Confetti, type ConfettiRef } from "@/components/visual-effects";
 
 type AvailabilityDate = Availability["dates"][number];
@@ -44,12 +45,15 @@ export default function BookingForm() {
   const [status, setStatus] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [paymentMode, setPaymentMode] = useState<Availability["paymentMode"]>("unavailable");
+  const [vipServerActive, setVipServerActive] = useState<boolean>();
   const paymentAttempt = useRef<{ payload: string; key: string } | null>(null);
   const [form, setForm] = useState({ name: "", whatsapp: "", email: "" });
   const [people, setPeople] = useState(INCLUDED_PEOPLE);
   const nameInput = useRef<HTMLInputElement>(null);
   const dateHeading = useRef<HTMLHeadingElement>(null);
   const confettiRef = useRef<ConfettiRef>(null);
+  const phase = usePresalePhase();
+  const vipActive = phase === "vip" && vipServerActive !== false;
   const selectedDay = availability.find((date) => date.iso === selectedDate);
   const availableCount = selectedDay?.slots.filter((slot) => slot.available).length ?? 0;
   const pricing = getReservationPricing(people, couponApplied);
@@ -61,6 +65,7 @@ export default function BookingForm() {
       const data = await fetchAvailability();
       setAvailability(data.dates);
       setPaymentMode(data.paymentMode);
+      setVipServerActive(data.coupon.active);
       setLoadError(false);
       return data;
     } catch {
@@ -74,7 +79,7 @@ export default function BookingForm() {
     function refresh() {
       if (document.hidden) return;
       void fetchAvailability()
-        .then((data) => { if (active) { setAvailability(data.dates); setPaymentMode(data.paymentMode); setLoadError(false); } })
+        .then((data) => { if (active) { setAvailability(data.dates); setPaymentMode(data.paymentMode); setVipServerActive(data.coupon.active); setLoadError(false); } })
         .catch(() => { if (active) setLoadError(true); })
         .finally(() => { if (active) setLoading(false); });
     }
@@ -84,6 +89,14 @@ export default function BookingForm() {
     document.addEventListener("visibilitychange", refresh);
     return () => { active = false; window.clearInterval(interval); window.removeEventListener("focus", refresh); document.removeEventListener("visibilitychange", refresh); };
   }, []);
+
+  useEffect(() => {
+    if (!vipActive) {
+      setCoupon("");
+      setCouponApplied(false);
+      setCouponMessage("");
+    }
+  }, [vipActive]);
 
   function continueToDetails() {
     setStatus("");
@@ -95,6 +108,11 @@ export default function BookingForm() {
     requestAnimationFrame(() => dateHeading.current?.focus({ preventScroll: true }));
   }
   async function applyCoupon() {
+    if (!vipActive) {
+      setCouponApplied(false);
+      setCouponMessage("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
+      return;
+    }
     if (coupon.trim().toUpperCase() !== "NAVIDAD26") {
       setCouponApplied(false);
       setCouponMessage("Código no válido. Revisa el cupón e inténtalo otra vez.");
@@ -123,7 +141,7 @@ export default function BookingForm() {
     }
     setSubmitting(true);
     setStatus("");
-    const payload: ReservationInput = { date: selectedDate, time: selectedTime, ...form, people, coupon: couponApplied ? "NAVIDAD26" : "" };
+    const payload: ReservationInput = { date: selectedDate, time: selectedTime, ...form, people, coupon: couponApplied && vipActive ? "NAVIDAD26" : "" };
     const serialized = JSON.stringify(payload);
     if (!paymentAttempt.current || paymentAttempt.current.payload !== serialized) {
       paymentAttempt.current = { payload: serialized, key: crypto.randomUUID() };
@@ -171,7 +189,7 @@ export default function BookingForm() {
             ))}</div>
           </fieldset>
           <button className="button button-wine next-button" type="button" disabled={!selectedSlotAvailable || loading || loadError} onClick={(event) => { event.preventDefault(); continueToDetails(); }}>Continuar con mis datos <ArrowIcon /></button>
-          <p className="step-note">Anticipo del 50% · con NAVIDAD26 ahorras $200 en la sesión</p>
+          <p className="step-note">{vipActive ? "Anticipo del 50% · con NAVIDAD26 ahorras $200 en la sesión" : "Anticipo del 50% · preventa general · 5 fotos editadas"}</p>
         </div>
       ) : (
         <div key="details" className="details-step">
@@ -182,13 +200,13 @@ export default function BookingForm() {
             <label>Correo electrónico<input required type="email" maxLength={150} autoComplete="email" value={form.email} onChange={(e) => { const email = e.target.value; setForm((current) => ({ ...current, email })); }} /></label>
             <label className="field-wide people-field">Personas en la sesión<select value={people} onChange={(e) => setPeople(Number(e.target.value))}>{Array.from({ length: MAX_PEOPLE }, (_, index) => { const count = index + 1; return <option key={count} value={count}>{count} {count === 1 ? "persona" : "personas"}</option>; })}</select><small>Hasta {INCLUDED_PEOPLE} personas incluidas · desde la {INCLUDED_PEOPLE + 1}.ª: +${EXTRA_PERSON_PRICE} MXN por persona</small></label>
           </div>
-          <div className="coupon-field">
+          {vipActive ? <div className="coupon-field">
             <label htmlFor="coupon">Cupón VIP <span>(opcional)</span></label>
             <div className="coupon-row"><input id="coupon" value={coupon} maxLength={24} autoCapitalize="characters" spellCheck={false} placeholder="NAVIDAD26" aria-describedby="coupon-message" onChange={(e) => { setCoupon(e.target.value); setCouponApplied(false); setCouponMessage(""); }} /><button type="button" disabled={checkingCoupon} onClick={() => void applyCoupon()}>{checkingCoupon ? "Validando…" : "Aplicar"}</button></div>
             <p id="coupon-message" role="status" className={couponApplied ? "success-message" : "error-message"}>{couponMessage}</p>
-          </div>
+          </div> : <div className="coupon-field coupon-disabled"><p role="status">La preventa general está activa. El código VIP y las fotos extra ya no están disponibles.</p></div>}
           <dl className="payment-summary">
-            <div><dt>Sesión · {couponApplied ? 7 : 5} fotos</dt><dd>$1,800 MXN</dd></div>
+            <div><dt>Sesión · {couponApplied ? 7 : 5} fotos</dt><dd>${pricing.base.toLocaleString("es-MX")} MXN</dd></div>
             {couponApplied && <div className="discount-row"><dt>Descuento VIP</dt><dd>−$200 MXN</dd></div>}
             {pricing.extraPeople > 0 && <div><dt>{pricing.extraPeople} persona{pricing.extraPeople === 1 ? "" : "s"} extra</dt><dd>+${pricing.extraFee.toLocaleString("es-MX")} MXN</dd></div>}
             <div><dt>Total</dt><dd>${pricing.total.toLocaleString("es-MX")} MXN</dd></div>

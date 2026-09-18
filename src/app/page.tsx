@@ -1,12 +1,12 @@
 import Image from "next/image";
 import BookingForm from "@/components/booking-form";
-import PreSaleCountdown from "@/components/pre-sale-countdown";
+import PreSaleCountdown, { PreSaleBenefit, PreSaleOffer, PreSaleSeasonNote } from "@/components/pre-sale-countdown";
 import SetVideo from "@/components/set-video";
 import Snow from "@/components/snow";
 import { BorderBeam, ScrollExpand, ShinyText, TiltedCard } from "@/components/visual-effects";
 
 const faqs = [
-  ["¿Cómo se paga?", "Apartas con el 50% no reembolsable. El resto se liquida en efectivo el día de la sesión. Con NAVIDAD26, el anticipo es de $800 y el saldo de $800."],
+  ["¿Cómo se paga?", "Apartas con el 50% no reembolsable. El resto se liquida en efectivo el día de la sesión."],
   ["¿Quiénes pueden venir?", "Incluye hasta 5 personas de tu núcleo familiar directo. Desde la sexta, cada persona extra suma $200 MXN al total y al anticipo del 50%."],
   ["¿Cómo recibo mis fotos?", "En una galería digital privada, editadas y en alta resolución. La fecha de entrega se confirma con el estudio."],
   ["¿Puedo elegir más fotografías el día de mi sesión?", "Sí. Puedes agregar fotografías el día de tu sesión: el costo depende de la cantidad y puedes elegir imágenes individuales o la galería completa. Todo adicional tiene un costo extra."],
@@ -80,7 +80,7 @@ export default function HomePage() {
             <p className="hero-description">Sube a bordo, juega a ser maquinista y llévate 5 recuerdos editados para volver a ellos cada diciembre.</p>
             <a className="button button-wine hero-action" href="#reserva">Reserva tu sesión <ArrowIcon /></a>
             <p className="hero-note">Anticipo del 50% · Fechas limitadas · Cupos por horario</p>
-            <div className="hero-offer"><p><strong>NAVIDAD26</strong> $200 menos + 2 fotos extra · primeros 10 usos</p><PreSaleCountdown /></div>
+            <div className="hero-offer"><PreSaleOffer /><PreSaleCountdown /></div>
           </div>
           <div className="hero-footer" aria-label="Información de la experiencia">
             <span><PinIcon /> Palenque, Chiapas</span>
@@ -136,7 +136,7 @@ export default function HomePage() {
               <span className="season-link season-link-disabled">Próximamente</span>
             </article>
           </div>
-          <p className="season-note"><strong>Oferta VIP</strong> NAVIDAD26: $1,600 · 7 fotos · primeros 10 usos</p>
+              <PreSaleSeasonNote />
         </section>
 
         <section className="memory-band" aria-label="La Estación de los Recuerdos">
@@ -173,7 +173,7 @@ export default function HomePage() {
               <li><span>03</span>5 fotos retocadas en alta resolución</li>
               <li><span>04</span>Galería privada para descargar</li>
             </ul>
-            <div className="vip-note"><p><strong>Beneficio VIP</strong><span>Con <b>NAVIDAD26</b>: $1,600 y 2 fotos extra.</span></p><small>Primeros 10 usos · Apartas con $800</small></div>
+            <PreSaleBenefit />
           </div>
           <figure className="story-polaroid">
             <div className="story-frame"><Image src="/media/navidad-2026-anden.jpg" alt="Pequeño viajero listo para abordar el tren de los recuerdos" width={1280} height={853} sizes="(max-width: 760px) 52vw, 27vw" /></div>

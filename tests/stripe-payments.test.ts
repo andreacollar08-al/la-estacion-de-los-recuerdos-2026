@@ -5,7 +5,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { randomUUID } from "node:crypto";
 import { reservationSchema } from "../src/lib/booking";
-import { HOLD_DURATION_MS } from "../src/lib/booking-config";
+import { HOLD_DURATION_MS, VIP_PRE_SALE_END_MS } from "../src/lib/booking-config";
 import { createPaymentStore, type PaymentReservation } from "../src/lib/payment-store";
 import { createPaymentService, paymentMode, PAYMENT_PROJECT } from "../src/lib/stripe-payments";
 import { POST as webhook } from "../src/app/api/webhooks/stripe/route";
@@ -63,6 +63,11 @@ describe("persistent reservations", () => {
     s.transition(reservations[0].reference, "cs_test_1", "expired", "evt_expired");
     expect(s.reserve(input("16:00", "2026-10-23", "NAVIDAD26"), randomUUID()).deposit).toBe(800);
     expect(s.getAvailability().coupon.claimed).toBe(10);
+  });
+  it("rejects the VIP code after the scheduled deadline", () => {
+    const s = store(":memory:", () => VIP_PRE_SALE_END_MS + 1);
+    expect(s.getAvailability().coupon).toMatchObject({ active: false, available: false });
+    expect(() => s.reserve(input("16:00", "2026-10-23", "NAVIDAD26"), randomUUID())).toThrow("La preventa VIP terminó");
   });
 });
 

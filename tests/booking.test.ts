@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { createBookingStore, getReservationPricing, reservationSchema } from "../src/lib/booking";
-import { HOLD_DURATION_MS, INITIAL_RELEASED_TIMES } from "../src/lib/booking-config";
+import { HOLD_DURATION_MS, INITIAL_RELEASED_TIMES, VIP_PRE_SALE_END_MS } from "../src/lib/booking-config";
 
 const input = (time = "16:00", date = "2026-10-21") => reservationSchema.parse({
   date, time, name: "Familia Test", whatsapp: "9210000000", email: "test@example.com", people: 5, coupon: "",
@@ -90,6 +90,16 @@ describe("staged booking", () => {
     const result = store.createReservation({ ...input(), coupon: "navidad26" });
     expect(result).toMatchObject({ ok: true, deposit: 800, total: 1600, photos: 7, people: 5 });
     expect(store.getAvailability().coupon.limit).toBe(10);
+  });
+
+  it("closes the VIP code and extra photos after the VIP deadline", () => {
+    const store = createBookingStore(() => VIP_PRE_SALE_END_MS + 1);
+    expect(store.getAvailability().coupon).toMatchObject({ active: false, available: false });
+    expect(store.createReservation({ ...input(), coupon: "NAVIDAD26" })).toMatchObject({
+      ok: false,
+      status: 409,
+      error: "La preventa VIP terminó. El código y las fotos extra ya no están disponibles.",
+    });
   });
 
   it("adds $200 for each person after the five included", () => {
