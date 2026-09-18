@@ -68,8 +68,8 @@ export default function HomePage() {
         <section className="hero" aria-labelledby="campaign-title">
           <div className="hero-photo">
             <Image
-              src="/media/navidad-2026-maquinistas.jpg"
-              alt="Dos pequeños maquinistas con maletas junto a la locomotora nevada del set de Navidad"
+              src="/media/navidad-2026-galeria-09.jpg"
+              alt="Dos niños vestidos de maquinistas junto a la locomotora nevada del set de Navidad"
               fill
               priority
               sizes="100vw"
@@ -204,7 +204,7 @@ export default function HomePage() {
         </section>
 
         <section className="final-cta" aria-label="Reserva tu sesión">
-          <Image src="/media/navidad-2026-maquinistas.jpg" alt="La locomotora nevada de La Estación de los Recuerdos" fill sizes="100vw" />
+          <Image src="/media/navidad-2026-galeria-03.jpg" alt="Padre y sus hijas abrazados junto a la locomotora nevada de La Estación de los Recuerdos" fill sizes="100vw" />
           <div><p>Un viaje comienza.<br /><em>Un recuerdo queda.</em></p><a className="button button-wine" href="#reserva">Reserva tu sesión <ArrowIcon /></a></div>
         </section>
       </main>
