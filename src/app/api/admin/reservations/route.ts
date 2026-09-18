@@ -1,10 +1,25 @@
 import { NextResponse } from "next/server";
+import { randomUUID } from "node:crypto";
 import { hasAdminSession } from "@/lib/admin-auth";
-import { getPaymentStore } from "@/lib/payment-store";
+import { getPaymentStore, BookingError } from "@/lib/payment-store";
+import { reservationSchema } from "@/lib/booking";
 
 export const runtime = "nodejs";
 
 const PHOTO_STATUSES = new Set(["pendientes", "en_edicion", "listas", "entregadas"]);
+
+export async function POST(request: Request) {
+  if (!(await hasAdminSession(request))) return NextResponse.json({ error: "Sesión no autorizada." }, { status: 401, headers: { "Cache-Control": "no-store" } });
+  try {
+    const parsed = reservationSchema.safeParse(await request.json());
+    if (!parsed.success) return NextResponse.json({ error: "Completa fecha, horario y datos del cliente." }, { status: 400 });
+    const reservation = await (await getPaymentStore()).reserve(parsed.data, `admin-${randomUUID()}`);
+    return NextResponse.json({ ok: true, reference: reservation.reference }, { headers: { "Cache-Control": "no-store" } });
+  } catch (error) {
+    const status = error instanceof BookingError ? error.status : 503;
+    return NextResponse.json({ error: error instanceof Error ? error.message : "No pudimos registrar la reserva." }, { status });
+  }
+}
 
 export async function PATCH(request: Request) {
   if (!(await hasAdminSession(request))) return NextResponse.json({ error: "Sesión no autorizada." }, { status: 401, headers: { "Cache-Control": "no-store" } });
