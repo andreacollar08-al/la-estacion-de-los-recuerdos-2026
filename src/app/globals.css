@@ -151,9 +151,21 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .station { padding-block: clamp(72px, 10vw, 112px); text-align: center; }
 .station-heading .section-label { margin-bottom: 14px; }
 .station-heading h2 { font-size: clamp(39px, 4.4vw, 60px); }
-.station-rail { display: grid; grid-template-columns: 1.35fr 1fr 1fr; gap: 7px; margin-top: 29px; align-items: stretch; }
+.station-rail { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin-top: 29px; align-items: stretch; }
 .station-tile { position: relative; width: 100%; min-width: 0; overflow: hidden; background: var(--espresso); aspect-ratio: 1.03 / 1; }
-.station-tile img { width: 100%; height: 100%; object-fit: cover; }
+.station-tile img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s cubic-bezier(.2,.7,.2,1), filter .45s ease; }
+.station-gallery { grid-auto-flow: dense; }
+.station-gallery-tile { border: 1px solid rgba(228, 208, 180, .3); box-shadow: 0 8px 18px rgba(40, 27, 17, .09); }
+.station-gallery-tile-feature { grid-column: span 2; aspect-ratio: 1.5 / 1; }
+.station-gallery-tile-portrait { aspect-ratio: 4 / 5; }
+.station-gallery-tile-landscape { aspect-ratio: 1.2 / 1; }
+.station-gallery-tile:nth-child(1) img { object-position: 54% center; }
+.station-gallery-tile:nth-child(2) img, .station-gallery-tile:nth-child(5) img { object-position: center 42%; }
+.station-gallery-tile:nth-child(4) img, .station-gallery-tile:nth-child(9) img { object-position: 58% center; }
+.station-gallery-tile:nth-child(7) img, .station-gallery-tile:nth-child(8) img { object-position: center 44%; }
+@media (hover: hover) and (pointer: fine) {
+  .station-gallery-tile:hover img { transform: scale(1.035); filter: saturate(1.05); }
+}
 .station-tile-wide img { object-position: 60% center; }
 .station-tile-last img { object-position: 82% center; }
 .station-video-tile { aspect-ratio: 1.03 / 1; }
@@ -357,6 +369,9 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .station-rail { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 22px; }
   .station-tile, .station-video-tile { aspect-ratio: 1 / 1; }
   .station-tile-wide { grid-column: 1 / -1; aspect-ratio: 1.55 / 1; }
+  .station-gallery-tile-feature { grid-column: 1 / -1; aspect-ratio: 1.45 / 1; }
+  .station-gallery-tile-portrait { aspect-ratio: 4 / 5; }
+  .station-gallery-tile-landscape { aspect-ratio: 1.2 / 1; }
   .scroll-expand { height: min(620px, 140vw); margin-top: 26px; }
   .video-controls { right: 3px; bottom: 3px; left: 3px; }
   .video-controls button { min-height: 23px; padding: 3px 4px; font-size: 6px; }
@@ -484,6 +499,7 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .station { padding-block: 80px 82px; }
   .station-heading h2 { font-size: clamp(46px, 11vw, 62px); }
   .station-rail { gap: 8px; margin-top: 32px; }
+  .station-gallery-tile-feature { aspect-ratio: 1.55 / 1; }
   .scroll-expand { height: min(760px, 145vw); margin-top: 34px; }
   .video-controls { right: 8px; bottom: 8px; left: 8px; gap: 8px; }
   .video-controls button { min-height: 40px; padding: 7px 10px; font-size: 11px; }
@@ -642,6 +658,7 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .station { padding-block: 60px 62px; }
   .station-heading h2 { font-size: clamp(34px, 8vw, 48px); }
   .station-rail { gap: 6px; margin-top: 23px; }
+  .station-gallery-tile-feature { aspect-ratio: 1.55 / 1; }
   .scroll-expand { height: min(620px, 135vw); margin-top: 25px; }
   .video-controls { right: 5px; bottom: 5px; left: 5px; }
   .video-controls button { min-height: 34px; padding: 5px 8px; font-size: 9px; }
@@ -748,6 +765,10 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .station { padding-block: 72px 74px; }
   .station-heading h2 { font-size: clamp(40px, 9.8vw, 54px); }
   .station-rail { gap: 8px; margin-top: 30px; }
+  .station-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+  .station-gallery-tile-feature { grid-column: 1 / -1; aspect-ratio: 1.45 / 1; }
+  .station-gallery-tile-portrait { aspect-ratio: 4 / 5; }
+  .station-gallery-tile-landscape { aspect-ratio: 1.12 / 1; }
   .scroll-expand { height: min(680px, 145vw); margin-top: 31px; }
 
   .experience { gap: 34px; padding-block: 76px 84px; }
