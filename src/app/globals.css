@@ -569,18 +569,18 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .menu-toggle { width: 48px; height: 48px; gap: 6px; padding: 9px; }
   .menu-toggle span { height: 1.5px; }
 
-  .hero-copy { padding-top: clamp(135px, 22vw, 190px); padding-bottom: clamp(84px, 13vw, 122px); }
-  .hero-meta { font-size: clamp(10px, 1.7vw, 12px); }
-  .hero h1 { margin-top: 15px; font-size: clamp(36px, 10.5vw, 64px); line-height: .84; }
-  .hero-lead { margin-top: 23px; font-size: clamp(11px, 1.9vw, 15px); }
-  .hero-description { margin-top: 13px; font-size: clamp(13px, 2vw, 16px); line-height: 1.4; }
+  .hero-copy { padding-top: clamp(112px, 19vw, 160px); padding-bottom: clamp(112px, 18vw, 150px); text-align: center; }
+  .hero-meta { font-size: clamp(10px, 1.7vw, 12px); text-align: center; }
+  .hero h1 { margin-top: 15px; font-size: clamp(42px, 11.3vw, 66px); line-height: .84; }
+  .hero-lead { margin: 23px auto 0; font-size: clamp(11px, 1.9vw, 15px); }
+  .hero-description { margin: 13px auto 0; font-size: clamp(13px, 2vw, 16px); line-height: 1.4; }
   .button { min-height: 56px; padding: 13px 20px; font-size: clamp(14px, 2.1vw, 16px); }
   .button .icon { width: 21px; height: 21px; }
-  .hero-action { margin-top: 22px; padding-inline: 22px; }
-  .hero-note { margin-top: 13px; font-size: clamp(10px, 1.7vw, 12px); }
-  .hero-offer { margin-top: 10px; font-size: clamp(10px, 1.7vw, 12px); }
+  .hero-action { margin: 22px auto 0; padding-inline: 22px; }
+  .hero-note { margin: 13px auto 0; font-size: clamp(10px, 1.7vw, 12px); text-align: center; }
+  .hero-offer { margin: 10px auto 0; font-size: clamp(10px, 1.7vw, 12px); text-align: center; }
   .hero-offer strong { font-size: clamp(9px, 1.6vw, 11px); }
-  .hero-footer { min-height: 48px; gap: 6px 15px; padding-block: 8px; font-size: clamp(9px, 1.6vw, 11px); }
+  .hero-footer { min-height: 48px; justify-content: center; gap: 6px 15px; padding-block: 8px; font-size: clamp(9px, 1.6vw, 11px); text-align: center; }
   .micro-icon { width: 14px; height: 14px; }
 
   .family-intro { gap: 24px; padding-block: 58px 32px; }
