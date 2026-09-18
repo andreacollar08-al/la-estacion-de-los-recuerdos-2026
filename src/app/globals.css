@@ -561,6 +561,134 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .booking-progress { gap: 10px; font-size: 11px; }
 }
 
+/* Compact mobile pass: keep the same hierarchy at a calmer reading scale. */
+@media (max-width: 760px) {
+  .site-header { min-height: 76px; padding-top: max(18px, env(safe-area-inset-top)); padding-bottom: 14px; }
+  .brand-name { font-size: clamp(15px, 2.9vw, 19px); }
+  .brand-sub { font-size: clamp(7px, 1.25vw, 9px); }
+  .menu-toggle { width: 48px; height: 48px; gap: 6px; padding: 9px; }
+  .menu-toggle span { height: 1.5px; }
+
+  .hero-copy { padding-top: clamp(135px, 22vw, 190px); padding-bottom: clamp(84px, 13vw, 122px); }
+  .hero-meta { font-size: clamp(10px, 1.7vw, 12px); }
+  .hero h1 { margin-top: 15px; font-size: clamp(36px, 10.5vw, 64px); line-height: .84; }
+  .hero-lead { margin-top: 23px; font-size: clamp(11px, 1.9vw, 15px); }
+  .hero-description { margin-top: 13px; font-size: clamp(13px, 2vw, 16px); line-height: 1.4; }
+  .button { min-height: 56px; padding: 13px 20px; font-size: clamp(14px, 2.1vw, 16px); }
+  .button .icon { width: 21px; height: 21px; }
+  .hero-action { margin-top: 22px; padding-inline: 22px; }
+  .hero-note { margin-top: 13px; font-size: clamp(10px, 1.7vw, 12px); }
+  .hero-offer { margin-top: 10px; font-size: clamp(10px, 1.7vw, 12px); }
+  .hero-offer strong { font-size: clamp(9px, 1.6vw, 11px); }
+  .hero-footer { min-height: 48px; gap: 6px 15px; padding-block: 8px; font-size: clamp(9px, 1.6vw, 11px); }
+  .micro-icon { width: 14px; height: 14px; }
+
+  .family-intro { gap: 24px; padding-block: 58px 32px; }
+  .family-copy h2, .section-heading h2, .station-heading h2, .package-copy h2, .faq h2 { font-size: clamp(36px, 9.1vw, 50px); line-height: .88; }
+  .section-label { margin-bottom: 10px; font-size: clamp(9px, 1.6vw, 12px); }
+  .section-lead { margin-top: 13px; font-size: clamp(13px, 2.1vw, 16px); line-height: 1.45; }
+  .instant-photo { width: min(290px, 74vw); }
+  .instant-frame, .story-frame { padding: 7px 7px 9px; }
+  .instant-photo figcaption, .story-polaroid figcaption { padding-top: 8px; font-size: clamp(16px, 3.7vw, 21px); }
+
+  .feature-strip > div { min-height: 96px; padding: 14px 6px; }
+  .feature-strip .feature-icon { width: 25px; height: 25px; margin-bottom: 4px; }
+  .feature-strip strong { font-size: clamp(10px, 1.9vw, 13px); }
+  .feature-strip span { font-size: clamp(9px, 1.7vw, 12px); }
+
+  .seasons { padding-block: 60px 56px; }
+  .section-heading { padding-bottom: 19px; }
+  .section-heading > p:last-child { margin-top: 13px; font-size: clamp(12px, 2vw, 15px); }
+  .season-grid { gap: 8px; margin-top: 11px; }
+  .season-card { min-height: 250px; padding: 15px; }
+  .season-card-top { font-size: clamp(15px, 3.3vw, 20px); }
+  .season-badge { padding: 4px 6px; font-size: clamp(7px, 1.3vw, 9px); }
+  .season-card > small { margin-top: 20px; font-size: clamp(9px, 1.7vw, 12px); }
+  .season-card strong { margin-top: 14px; font-size: clamp(34px, 7.2vw, 48px); }
+  .season-card strong small { font-size: clamp(9px, 1.7vw, 12px); }
+  .season-card p { margin-top: 7px; font-size: clamp(11px, 2vw, 14px); }
+  .season-card-locked strong { font-size: clamp(22px, 5vw, 32px); }
+  .season-link { min-height: 48px; font-size: clamp(10px, 1.8vw, 12px); }
+  .season-link .icon { width: 16px; height: 16px; }
+  .season-note { margin-top: 12px; font-size: clamp(9px, 1.7vw, 12px); }
+
+  .memory-band { min-height: 160px; }
+  .memory-band p { font-size: clamp(25px, 6vw, 39px); }
+  .station { padding-block: 60px 62px; }
+  .station-heading h2 { font-size: clamp(34px, 8vw, 48px); }
+  .station-rail { gap: 6px; margin-top: 23px; }
+  .scroll-expand { height: min(620px, 135vw); margin-top: 25px; }
+  .video-controls { right: 5px; bottom: 5px; left: 5px; }
+  .video-controls button { min-height: 34px; padding: 5px 8px; font-size: 9px; }
+  .video-controls button:first-child { width: 34px; padding: 5px; }
+  .gallery-cta { min-height: 52px; margin-top: 18px; font-size: clamp(11px, 2vw, 13px); }
+
+  .experience { gap: 27px; padding-block: 62px 68px; }
+  .package-copy h2 { font-size: clamp(35px, 8.5vw, 48px); }
+  .package-list { margin-top: 23px; }
+  .package-list li { grid-template-columns: 30px 1fr; gap: 9px; padding: 11px 0; font-size: clamp(12px, 2.1vw, 15px); }
+  .package-list li span { font-size: clamp(10px, 1.8vw, 13px); }
+  .vip-note { margin-top: 21px; padding-top: 13px; }
+  .vip-note p { font-size: clamp(12px, 2.1vw, 15px); }
+  .vip-note small { font-size: clamp(10px, 1.7vw, 12px); }
+  .story-polaroid { width: min(290px, 74vw); }
+
+  .booking-section { padding-block: 62px; }
+  .booking-layout { gap: 28px; }
+  .booking-intro h2 { font-size: clamp(36px, 9.1vw, 50px); }
+  .booking-intro > .section-lead { margin-top: 12px; font-size: clamp(14px, 2.2vw, 17px); }
+  .booking-intro > p { margin-top: 12px; font-size: clamp(12px, 2vw, 15px); }
+  .booking-intro .booking-policy { padding-top: 14px; font-size: clamp(11px, 1.9vw, 14px); }
+  .upcoming { gap: 21px; margin-top: 21px; padding-top: 13px; }
+  .upcoming span { font-size: clamp(11px, 1.9vw, 14px); }
+  .upcoming small { font-size: clamp(9px, 1.5vw, 11px); }
+  .booking-form { padding: 20px 16px; }
+  .booking-progress { gap: 13px; margin-bottom: 20px; padding-bottom: 13px; font-size: clamp(10px, 1.9vw, 13px); }
+  .calendar-heading h3 { font-size: clamp(24px, 4.8vw, 31px); }
+  .calendar-heading span, .calendar-status { font-size: clamp(11px, 1.9vw, 14px); }
+  .calendar-status { min-height: 20px; }
+  .date-grid { gap: 5px; margin-top: 14px; }
+  .date-button { min-height: 62px; padding: 6px 2px; }
+  .date-button span { font-size: clamp(9px, 1.6vw, 11px); }
+  .date-button strong { font-size: clamp(26px, 5.5vw, 34px); }
+  .time-fieldset { margin-top: 23px; }
+  .time-fieldset legend { font-size: clamp(14px, 2.6vw, 18px); }
+  .release-note { font-size: clamp(11px, 1.9vw, 14px); }
+  .time-grid { gap: 6px; margin-top: 9px; }
+  .time-button { min-height: 56px; padding: 6px 4px; font-size: clamp(12px, 2.1vw, 15px); }
+  .time-button small { margin-top: 3px; font-size: clamp(9px, 1.6vw, 11px); }
+  .next-button, .submit-button { margin-top: 21px; }
+  .step-note { margin-top: 10px; font-size: clamp(10px, 1.8vw, 13px); }
+  .selected-schedule { margin-bottom: 20px; }
+  .selected-schedule span { font-size: clamp(11px, 1.9vw, 14px); }
+  .selected-schedule strong { font-size: clamp(15px, 2.6vw, 18px); }
+  .text-button { min-height: 48px; font-size: clamp(11px, 1.9vw, 14px); }
+  .fields-grid { gap: 13px; }
+  .fields-grid label, .coupon-field > label { font-size: clamp(11px, 2vw, 14px); }
+  .fields-grid input, .fields-grid select, .coupon-row input { min-height: 50px; padding: 10px 11px; }
+  .people-field small { font-size: clamp(10px, 1.8vw, 12px); }
+  .coupon-field { margin-top: 17px; }
+  .coupon-row { gap: 6px; margin-top: 5px; }
+  .coupon-row button { min-width: 84px; min-height: 50px; font-size: clamp(11px, 1.9vw, 14px); }
+  .success-message, .error-message { font-size: clamp(11px, 1.8vw, 13px); }
+  .payment-summary { margin-top: 19px; padding-top: 11px; }
+  .payment-summary > div { margin-top: 7px; font-size: clamp(11px, 2vw, 14px); }
+  .total-row dd { font-size: clamp(26px, 5.5vw, 34px); }
+  .form-legal, .preview-note { font-size: clamp(10px, 1.7vw, 12px); }
+
+  .faq { gap: 25px; padding-block: 62px; }
+  .faq h2 { font-size: clamp(36px, 9.1vw, 50px); }
+  .faq-list summary { min-height: 58px; gap: 17px; font-size: clamp(13px, 2.3vw, 16px); }
+  .faq-list summary .icon { width: 18px; height: 18px; }
+  .faq-list p { padding: 0 30px 17px 0; font-size: clamp(12px, 2.1vw, 15px); }
+  .final-cta { min-height: 210px; }
+  .final-cta p { margin-bottom: 22px; font-size: clamp(30px, 6.4vw, 44px); }
+  .site-footer { gap: 17px; padding-top: 26px; }
+  .site-footer .brand-name { font-size: 15px; }
+  .site-footer p, .site-footer > small { margin-top: 5px; font-size: clamp(10px, 1.8vw, 13px); }
+  .snow-toggle { min-height: 48px; font-size: clamp(10px, 1.8vw, 12px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
