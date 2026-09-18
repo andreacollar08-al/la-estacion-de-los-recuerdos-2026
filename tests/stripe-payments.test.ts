@@ -69,6 +69,13 @@ describe("persistent reservations", () => {
     expect(s.getAvailability().coupon).toMatchObject({ active: false, available: false });
     expect(() => s.reserve(input("16:00", "2026-10-23", "NAVIDAD26"), randomUUID())).toThrow("La preventa VIP terminó");
   });
+  it("lists reservations and persists admin photo status and notes", () => {
+    const s = store();
+    const reservation = s.reserve(input(), randomUUID());
+    expect(s.list().map((item) => item.reference)).toEqual([reservation.reference]);
+    expect(s.updateAdmin(reservation.reference, { photoStatus: "en_edicion", adminNote: "Enviar selección por WhatsApp" })).toMatchObject({ photoStatus: "en_edicion", adminNote: "Enviar selección por WhatsApp" });
+    expect(s.get(reservation.reference)).toMatchObject({ photoStatus: "en_edicion", adminNote: "Enviar selección por WhatsApp" });
+  });
 });
 
 describe("Stripe payment lifecycle", () => {
