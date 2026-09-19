@@ -63,6 +63,8 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .hero-photo { position: absolute; z-index: -2; inset: 0; background: #11100e; }
 .hero-photo::after { position: absolute; inset: 0; content: ""; background: linear-gradient(90deg, rgba(18, 14, 11, .9) 0%, rgba(18, 14, 11, .6) 35%, rgba(18, 14, 11, .2) 72%, rgba(18, 14, 11, .37) 100%), linear-gradient(0deg, rgba(18, 14, 11, .86) 0%, transparent 55%); }
 .hero-photo img { width: 100%; height: 100%; object-fit: cover; object-position: center 47%; }
+.hero-photo-black { background: #050505; }
+.hero-photo-black::after { background: linear-gradient(180deg, #050505 0%, #050505 68%, #090909 100%); }
 .hero-copy { position: relative; z-index: 1; width: var(--shell); margin-inline: auto; padding: clamp(148px, 21vh, 210px) 0 66px; animation: welcome-in .7s var(--ease) both; }
 .hero-meta { color: var(--gold-light); font-size: 10px; font-weight: 600; letter-spacing: .25em; text-transform: uppercase; }
 .hero-meta span { padding-inline: 5px; color: #f2e4d2; }

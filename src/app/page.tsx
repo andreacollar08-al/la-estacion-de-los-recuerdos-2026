@@ -63,16 +63,8 @@ export default function HomePage() {
       </header>
 
       <main id="inicio">
-        <section className="hero" aria-labelledby="campaign-title">
-          <div className="hero-photo">
-            <Image
-              src="/media/navidad-2026-galeria-09.jpg"
-              alt="Dos niños vestidos de maquinistas junto a la locomotora nevada del set de Navidad"
-              fill
-              priority
-              sizes="100vw"
-            />
-          </div>
+        <section className="hero hero-black" aria-labelledby="campaign-title">
+          <div className="hero-photo hero-photo-black" aria-hidden="true" />
           <div className="hero-copy">
             <p className="hero-meta">Navidad 2026 <span aria-hidden="true">·</span> Palenque, Chiapas</p>
             <h1 id="campaign-title"><ShinyText className="shiny-title">La Estación</ShinyText><br /><ShinyText className="shiny-title shiny-title-emphasis">de los Recuerdos</ShinyText></h1>
