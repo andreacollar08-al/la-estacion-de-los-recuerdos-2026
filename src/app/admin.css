@@ -203,3 +203,5 @@
 .admin-app .admin-mobile-nav button { color: #8ea4b2; }
 .admin-app .admin-mobile-nav button.is-active { background: #19384e; color: #9cddff; }
 .admin-app .admin-text-button { color: #7bc7ef; }
+.admin-login-shell { background: radial-gradient(circle at 80% 10%, #1e4058, transparent 42%), #0d1721; }
+.admin-login-card { border-color: #385568; background: #122634e8; box-shadow: 0 25px 80px #0008; }
