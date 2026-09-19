@@ -53,7 +53,7 @@ export default async function ConfirmationPage({ searchParams }: { searchParams:
 function DigitalTicket({ reservation }: { reservation: PaymentReservation }) {
   return <section className="digital-ticket" aria-label="Boleto digital de reserva">
     <div className="ticket-body">
-      <div className="ticket-topline"><span>RUBIEL PHOTO ART</span><TrainMark /><small>NAVIDAD 2026</small></div>
+      <div className="ticket-topline"><span className="ticket-brand-lockup"><strong>RUBIEL</strong><small>PHOTO ART</small></span><TrainMark /><small>NAVIDAD 2026</small></div>
       <p className="ticket-kicker">TU VIAJE ESTÁ RESERVADO</p>
       <h2>Familia <strong>{reservation.name}</strong></h2>
       <p className="ticket-experience">VÁLIDO PARA LA EXPERIENCIA FOTOGRÁFICA<br />LA ESTACIÓN DE LOS RECUERDOS</p>
