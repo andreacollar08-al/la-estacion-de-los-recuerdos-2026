@@ -7,7 +7,7 @@ Los medios se prepararon para la landing manteniendo el encuadre original; el vi
 | `navidad-2026-anden.jpg` | `1-Foto-1.jpg` | Foto secundaria, niño junto a la locomotora |
 | `navidad-2026-maquinistas.jpg` | `2-Foto-2.jpg` | Portada y vista previa social, dos niños junto a la locomotora |
 | `navidad-2026-set.mp4` | `SET NAVIDAD VIDEO.mp4` | Recorrido vertical del set, reproducción automática silenciada |
-| `navidad-soundtrack.m4a` | `navidad-soundtrack.mp4` | Música ambiental opcional, con control de pausa en la landing |
+| `navidad-soundtrack.mp3` | `Have Yourself A Merry Little Christmas - Home Alone SoundTrack - Mel Torme - HorrorManiac4.mp3` | Música ambiental opcional, con control de pausa en la landing |
 
 Origen de las fotos: `/tmp/codex-remote-attachments/01a0af05-daa6-73c2-9e41-e21325f395c3/DBA6D2FC-E677-4E89-8195-B9F28A960477/`.
 

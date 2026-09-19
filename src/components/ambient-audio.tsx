@@ -68,7 +68,7 @@ export default function AmbientAudio() {
   return (
     <div className={`ambient-audio${isPlaying ? " is-playing" : ""}`}>
       <audio ref={audioRef} loop preload="metadata" aria-label="Música ambiental de La Estación de los Recuerdos">
-        <source src="/media/navidad-soundtrack.m4a" type="audio/mp4" />
+        <source src="/media/navidad-soundtrack.mp3" type="audio/mpeg" />
         Tu navegador no puede reproducir esta música.
       </audio>
       <button
