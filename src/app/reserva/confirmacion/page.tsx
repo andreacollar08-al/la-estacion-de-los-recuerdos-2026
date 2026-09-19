@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { connection } from "next/server";
 import { getPaymentService, getStripe, paymentMode, PAYMENT_PROJECT } from "@/lib/stripe-payments";
 import { getPaymentStore, type PaymentReservation } from "@/lib/payment-store";
@@ -52,19 +53,17 @@ export default async function ConfirmationPage({ searchParams }: { searchParams:
 
 function DigitalTicket({ reservation }: { reservation: PaymentReservation }) {
   return <section className="digital-ticket" aria-label="Boleto digital de reserva">
+    <aside className="ticket-stub ticket-stub-left" aria-hidden="true"><span className="ticket-stub-code">RPA</span><strong className="ticket-number">{reservation.reference.slice(-4)}</strong><span className="ticket-stub-class">PASE<br />FAMILIAR</span></aside>
     <div className="ticket-body">
-      <div className="ticket-topline"><span className="ticket-brand-lockup"><strong>RUBIEL</strong><small>PHOTO ART</small></span><TrainMark /><small>NAVIDAD 2026</small></div>
+      <div className="ticket-topline"><span className="ticket-brand-lockup"><strong>RUBIEL</strong><small>PHOTO ART</small></span><small>NAVIDAD 2026</small></div>
       <p className="ticket-kicker">TU VIAJE ESTÁ RESERVADO</p>
-      <h2>Familia <strong>{reservation.name}</strong></h2>
+      <Image className="ticket-train-engraving" src="/media/ticket-train-engraving.png" alt="" width={600} height={300} priority />
+      <h2><span>FAMILIA</span><strong>{reservation.name}</strong></h2>
       <p className="ticket-experience">VÁLIDO PARA LA EXPERIENCIA FOTOGRÁFICA<br />LA ESTACIÓN DE LOS RECUERDOS</p>
       <div className="ticket-details"><div><small>FECHA</small><strong>{reservation.date}</strong></div><div><small>HORA</small><strong>{reservation.time}</strong></div><div><small>PERSONAS</small><strong>{reservation.people}</strong></div></div>
       <div className="ticket-footer"><span>ANTICIPO RECIBIDO · ${reservation.deposit.toLocaleString("es-MX")} MXN</span><strong>{reservation.reference}</strong></div>
     </div>
-    <aside className="ticket-stub"><span className="ticket-stub-label">PASE FAMILIAR</span><strong className="ticket-number">{reservation.reference.slice(-4)}</strong><span className="ticket-stub-class">CLASE<br />PREFERENTE</span></aside>
+    <aside className="ticket-stub ticket-stub-right" aria-hidden="true"><span className="ticket-stub-label">CLASE PREFERENTE</span><strong className="ticket-stub-year">2026</strong><span className="ticket-stub-code">RPA</span></aside>
     <PrintTicket />
   </section>;
-}
-
-function TrainMark() {
-  return <svg className="ticket-train-mark" viewBox="0 0 90 42" fill="none" aria-label="Locomotora"><path d="M12 26h48V12c0-4-3-7-7-7H25c-7 0-13 5-13 12v9Z" /><path d="M60 17h12l8 9v4H60M25 5V1h13v4M43 5V1h9v4" /><circle cx="25" cy="32" r="5" /><circle cx="64" cy="32" r="5" /><path d="M3 32h7M76 32h10M20 19h9M36 19h9" /></svg>;
 }
