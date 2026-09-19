@@ -1,7 +1,9 @@
 import Link from "next/link";
+import Image from "next/image";
 import { connection } from "next/server";
 import { getPaymentService, getStripe, paymentMode, PAYMENT_PROJECT } from "@/lib/stripe-payments";
 import { getPaymentStore, type PaymentReservation } from "@/lib/payment-store";
+import PrintTicket from "@/components/print-ticket";
 
 export const runtime = "nodejs";
 
@@ -40,10 +42,26 @@ export default async function ConfirmationPage({ searchParams }: { searchParams:
           : ended ? "Vuelve a la agenda para elegir un horario disponible."
           : "Tu reserva aparecerá aquí cuando podamos confirmar el pago con Stripe. Si ya pagaste, consulta el estado de nuevo antes de intentar otro pago."}</p>
         {reference && <div className="reference-line"><span>Referencia</span><strong>{reference}</strong></div>}
+        {paid && reservation && <DigitalTicket reservation={reservation} />}
         {paid && reservation && <p className="confirmation-note">Saldo pendiente: ${reservation.balance.toLocaleString("es-MX")} MXN en efectivo el día de la sesión. Incluye {reservation.photos} fotografías.</p>}
         {!paid && !ended && sessionId && <a className="button button-wine" href={`/reserva/confirmacion?session_id=${encodeURIComponent(sessionId)}`}>Consultar estado de nuevo</a>}
         <Link className="button button-dark" href="/#reserva">Volver a la agenda <ArrowIcon /></Link>
       </div>
     </main>
   );
+}
+
+function DigitalTicket({ reservation }: { reservation: PaymentReservation }) {
+  return <section className="digital-ticket" aria-label="Boleto digital de reserva">
+    <div className="ticket-media"><Image src="/media/navidad-2026-galeria-09.jpg" alt="Locomotora nevada de La Estación de los Recuerdos" fill sizes="(max-width: 590px) 100vw, 540px" /></div>
+    <div className="ticket-body">
+      <div className="ticket-brand"><span>RUBIEL PHOTO ART</span><small>NAVIDAD 2026 · PALENQUE, CHIAPAS</small></div>
+      <p className="ticket-kicker">TU VIAJE ESTÁ RESERVADO</p>
+      <h2>Familia: <strong>{reservation.name}</strong></h2>
+      <div className="ticket-route"><span>LA ESTACIÓN DE LOS RECUERDOS</span><i aria-hidden="true">✦</i><span>ABORDAJE EN PALENQUE</span></div>
+      <div className="ticket-details"><div><small>FECHA</small><strong>{reservation.date}</strong></div><div><small>HORA</small><strong>{reservation.time}</strong></div><div><small>VIAJEROS</small><strong>{reservation.people} personas</strong></div></div>
+      <div className="ticket-footer"><span>ANTICIPO RECIBIDO · ${reservation.deposit.toLocaleString("es-MX")} MXN</span><strong>{reservation.reference}</strong></div>
+    </div>
+    <PrintTicket />
+  </section>;
 }
