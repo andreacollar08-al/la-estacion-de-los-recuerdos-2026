@@ -1,6 +1,7 @@
 import Image from "next/image";
 import BookingForm from "@/components/booking-form";
 import PreSaleCountdown, { PreSaleBenefit, PreSaleOffer, PreSaleSeasonNote } from "@/components/pre-sale-countdown";
+import PhotoMarquee from "@/components/photo-marquee";
 import SetVideo from "@/components/set-video";
 import Snow from "@/components/snow";
 import { BorderBeam, ScrollExpand, ShinyText, TiltedCard } from "@/components/visual-effects";
@@ -16,13 +17,16 @@ const faqs = [
 ];
 
 const galleryPhotos = [
-  { src: "/media/navidad-2026-galeria-01.jpg", alt: "Retrato navideño junto a la locomotora y las maletas", width: 1280, height: 873, kind: "feature" },
-  { src: "/media/navidad-2026-galeria-02.jpg", alt: "Retrato de mujer con vestido rojo junto a la locomotora", width: 1024, height: 1280, kind: "portrait" },
-  { src: "/media/navidad-2026-galeria-03.jpg", alt: "Padre y sus hijas abrazados en la estación navideña", width: 1280, height: 1066, kind: "landscape" },
-  { src: "/media/navidad-2026-galeria-04.jpg", alt: "Familia sentada entre maletas frente a la locomotora", width: 1280, height: 1066, kind: "feature" },
-  { src: "/media/navidad-2026-galeria-07.jpg", alt: "Dos mujeres leyendo el periódico en la estación", width: 1280, height: 1139, kind: "landscape" },
-  { src: "/media/navidad-2026-galeria-08.jpg", alt: "Dos niños leyendo el periódico junto al tren", width: 1280, height: 1138, kind: "landscape" },
-  { src: "/media/navidad-2026-galeria-09.jpg", alt: "Dos niños vestidos de maquinistas junto a la locomotora", width: 1280, height: 1139, kind: "feature" },
+  { src: "/media/navidad-2026-galeria-01.jpg", alt: "Retrato navideño junto a la locomotora y las maletas", width: 1280, height: 873 },
+  { src: "/media/navidad-2026-galeria-02.jpg", alt: "Retrato de mujer con vestido rojo junto a la locomotora", width: 1024, height: 1280 },
+  { src: "/media/navidad-2026-galeria-03.jpg", alt: "Padre y sus hijas abrazados en la estación navideña", width: 1280, height: 1066 },
+  { src: "/media/navidad-2026-galeria-04.jpg", alt: "Familia sentada entre maletas frente a la locomotora", width: 1280, height: 1066 },
+  { src: "/media/navidad-2026-galeria-05.jpg", alt: "Retrato de mujer con abrigo rojo frente a la locomotora", width: 853, height: 1280 },
+  { src: "/media/navidad-2026-galeria-06.jpg", alt: "Retrato de mujer sentada entre maletas junto al tren", width: 1280, height: 1066 },
+  { src: "/media/navidad-2026-galeria-07.jpg", alt: "Dos mujeres leyendo el periódico en la estación", width: 1280, height: 1139 },
+  { src: "/media/navidad-2026-galeria-08.jpg", alt: "Dos niños leyendo el periódico junto al tren", width: 1280, height: 1138 },
+  { src: "/media/navidad-2026-galeria-09.jpg", alt: "Dos niños vestidos de maquinistas junto a la locomotora", width: 1280, height: 1139 },
+  { src: "/media/navidad-2026-anden.jpg", alt: "Pequeño viajero listo para abordar el tren de los recuerdos", width: 1280, height: 853 },
 ];
 
 function ArrowIcon() {
@@ -149,13 +153,7 @@ export default function HomePage() {
             <p className="section-label">Conoce la estación</p>
             <h2 id="station-title">El set donde<br /><em>comienza la historia.</em></h2>
           </div>
-          <div className="station-rail station-gallery" aria-label="Galería de retratos en la estación">
-            {galleryPhotos.map((photo) => (
-              <figure className={`station-tile station-gallery-tile station-gallery-tile-${photo.kind}`} key={photo.src}>
-                <Image src={photo.src} alt={photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 760px) 92vw, (max-width: 1100px) 48vw, 50vw" />
-              </figure>
-            ))}
-          </div>
+          <PhotoMarquee photos={galleryPhotos} />
           <ScrollExpand className="station-video-expand">
             <div className="scroll-expand-media"><SetVideo /></div>
           </ScrollExpand>
