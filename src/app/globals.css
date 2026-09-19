@@ -175,8 +175,8 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .photo-marquee-instruction { margin-bottom: 12px; color: var(--muted); font-size: 10px; letter-spacing: .12em; text-align: center; text-transform: uppercase; }
 .photo-marquee-viewport { position: relative; display: grid; gap: 13px; overflow: hidden; padding-block: 4px 10px; }
 .photo-marquee-row { min-width: 0; overflow: hidden; }
-.photo-marquee-track { display: flex; width: max-content; will-change: transform; animation: marquee 44s linear infinite; }
-.photo-marquee-track-reverse { animation-name: marquee-reverse; animation-duration: 51s; }
+.photo-marquee-track { display: flex; width: max-content; will-change: transform; animation: marquee 40s linear infinite; }
+.photo-marquee-track-reverse { animation-name: marquee-reverse; animation-duration: 46s; }
 .photo-marquee-group { display: flex; flex: none; gap: 13px; padding-right: 13px; }
 .photo-marquee-card { position: relative; flex: 0 0 clamp(220px, 24vw, 300px); aspect-ratio: 4 / 5; overflow: hidden; padding: 0; border: 1px solid rgba(139, 96, 45, .28); border-radius: 18px; background: var(--espresso); box-shadow: 0 12px 24px rgba(40, 27, 17, .15); color: var(--paper-light); text-align: left; }
 .photo-marquee-card img { width: 100%; height: 100%; object-fit: cover; transition: transform .45s var(--ease), filter .45s ease; }
