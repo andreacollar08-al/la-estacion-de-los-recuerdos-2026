@@ -63,8 +63,8 @@ export default function HomePage() {
       </header>
 
       <main id="inicio">
-        <section className="hero hero-dark" aria-labelledby="campaign-title">
-          <div className="hero-photo hero-photo-dark">
+        <section className="hero" aria-labelledby="campaign-title">
+          <div className="hero-photo">
             <Image
               src="/media/navidad-2026-galeria-09.jpg"
               alt="Dos niños vestidos de maquinistas junto a la locomotora nevada del set de Navidad"
