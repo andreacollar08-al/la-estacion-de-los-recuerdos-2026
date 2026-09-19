@@ -3,6 +3,7 @@ import BookingForm from "@/components/booking-form";
 import PreSaleCountdown, { PreSaleBenefit, PreSaleOffer, PreSaleSeasonNote } from "@/components/pre-sale-countdown";
 import PhotoMarquee from "@/components/photo-marquee";
 import SetVideo from "@/components/set-video";
+import AmbientAudio from "@/components/ambient-audio";
 import Snow from "@/components/snow";
 import { BorderBeam, ScrollExpand, ShinyText, TiltedCard } from "@/components/visual-effects";
 
@@ -210,6 +211,8 @@ export default function HomePage() {
         <Snow />
         <small>© 2026 Rubiel Photo Art</small>
       </footer>
+
+      <AmbientAudio />
     </>
   );
 }
