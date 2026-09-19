@@ -8,7 +8,8 @@
 .admin-sidebar nav button:hover, .admin-sidebar nav button.is-active { border-left-color: var(--admin-sky); background: #263f5c; color: #fff; }
 .admin-sidebar nav i { width: 20px; color: #b9cbd9; font-size: 22px; font-style: normal; line-height: 1; text-align: center; }
 .admin-user { margin-top: auto; padding: 18px 28px 26px; display: flex; align-items: center; gap: 12px; border-top: 1px solid #ffffff1a; }
-.admin-avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: #7694ae; color: #fff; font-weight: 600; }
+.admin-avatar { width: 42px; height: 42px; flex: 0 0 42px; overflow: hidden; display: grid; place-items: center; border: 2px solid #7dbde0; border-radius: 50%; background: #7694ae; color: #fff; font-weight: 600; }
+.admin-avatar img { width: 100%; height: 100%; object-fit: cover; object-position: center; filter: grayscale(1) contrast(1.05); }
 .admin-user div:last-child { display: grid; gap: 1px; }
 .admin-user strong { color: #fff; font-size: 13px; font-weight: 600; }
 .admin-user small { color: #9db1c2; font-size: 11px; }

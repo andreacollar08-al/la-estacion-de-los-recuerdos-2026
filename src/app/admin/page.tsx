@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useMemo, useState, type FormEvent, type ReactNode } from "react";
 
 type Section = "dashboard" | "calendar" | "reservations" | "payments" | "extras" | "photos" | "reports" | "settings";
@@ -185,7 +186,7 @@ export default function AdminPage() {
   const photoCounts = (Object.keys(photoStatusLabels) as PhotoStatus[]).map((status) => ({ status, count: data.reservations.filter((reservation) => reservation.photoStatus === status).length }));
 
   return <div className="admin-app">
-    <aside className="admin-sidebar"><div className="admin-sidebar-brand"><strong>RUBIEL</strong><span>PHOTO ART</span></div><nav aria-label="Navegación del control interno">{nav.map((item) => <button key={item.id} className={section === item.id ? "is-active" : ""} onClick={() => setSection(item.id)}><i aria-hidden="true">{item.icon}</i><span>{item.label}</span></button>)}</nav><div className="admin-user"><div className="admin-avatar">R</div><div><strong>Rubiel Photo Art</strong><small>Administrador</small></div></div></aside>
+    <aside className="admin-sidebar"><div className="admin-sidebar-brand"><strong>RUBIEL</strong><span>PHOTO ART</span></div><nav aria-label="Navegación del control interno">{nav.map((item) => <button key={item.id} className={section === item.id ? "is-active" : ""} onClick={() => setSection(item.id)}><i aria-hidden="true">{item.icon}</i><span>{item.label}</span></button>)}</nav><div className="admin-user"><div className="admin-avatar"><Image src="/media/admin-profile.jpg" alt="Rubiel Photo Art" width={44} height={44} /></div><div><strong>Rubiel Photo Art</strong><small>Administrador</small></div></div></aside>
     <main className="admin-main"><header className="admin-topbar"><div><p className="admin-eyebrow">RUBIEL PHOTO ART · CONTROL INTERNO</p><h1>{activeTitle === "Dashboard" ? "Calendario de sesiones" : activeTitle}</h1><p className="admin-subtitle">{section === "dashboard" ? "Consulta cada fecha, día y horario con el registro del cliente." : "Gestiona tu operación desde un solo lugar."}</p></div><div className="admin-actions"><button className="admin-primary-button" onClick={() => { setSection("reservations"); setShowNewReservation(true); }}>＋ Nueva reserva</button><button className="admin-secondary-button" onClick={exportCsv}>↓ Exportar</button><button className="admin-secondary-button admin-hide-mobile" onClick={() => void logout()}>Cerrar sesión</button><button className="admin-icon-button" aria-label="Actualizar" onClick={() => void loadDashboard()} disabled={refreshing}>↻</button></div></header>
       <div className="admin-mobile-nav">{nav.slice(0, 5).map((item) => <button key={item.id} className={section === item.id ? "is-active" : ""} onClick={() => setSection(item.id)}><i>{item.icon}</i><span>{item.label.split(" ")[0]}</span></button>)}</div>
       <div className="admin-kpi-strip"><span><strong>{data.metrics.confirmed}</strong> confirmadas</span><span><strong>{money(data.metrics.collected)}</strong> cobrado</span><span><strong>{money(data.metrics.pending)}</strong> pendiente</span></div>
