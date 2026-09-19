@@ -125,7 +125,7 @@ export default function BookingForm() {
       const data: Availability = await response.json();
       setCouponApplied(data.coupon.available);
       if (data.coupon.available) confettiRef.current?.fire({ particleCount: 108, spread: 78, origin: { x: 0.5, y: 0.58 } });
-      setCouponMessage(data.coupon.available ? "VIP aplicado: ahorras $200 y recibes 7 fotos." : "Los 10 cupones VIP ya fueron reclamados. Puedes reservar con la tarifa regular.");
+      setCouponMessage(data.coupon.available ? "Cupón VIP aplicado. Tu tarifa preferente quedó lista para reservar." : "Los 10 cupones VIP ya fueron reclamados. Puedes reservar con la tarifa regular.");
     } catch {
       setCouponApplied(false);
       setCouponMessage("No pudimos validar el cupón. Inténtalo otra vez.");
@@ -189,7 +189,7 @@ export default function BookingForm() {
             ))}</div>
           </fieldset>
           <button className="button button-wine next-button" type="button" disabled={!selectedSlotAvailable || loading || loadError} onClick={(event) => { event.preventDefault(); continueToDetails(); }}>Continuar con mis datos <ArrowIcon /></button>
-          <p className="step-note">{vipActive ? "Anticipo del 50% · con NAVIDAD26 ahorras $200 en la sesión" : "Anticipo del 50% · preventa general · 5 fotos editadas"}</p>
+          <p className="step-note">{vipActive ? "Anticipo del 50% · cupón VIP sorpresa · lugares limitados" : "Anticipo del 50% · preventa general · 5 fotos editadas"}</p>
         </div>
       ) : (
         <div key="details" className="details-step">
@@ -201,8 +201,8 @@ export default function BookingForm() {
             <label className="field-wide people-field">Personas en la sesión<select value={people} onChange={(e) => setPeople(Number(e.target.value))}>{Array.from({ length: MAX_PEOPLE }, (_, index) => { const count = index + 1; return <option key={count} value={count}>{count} {count === 1 ? "persona" : "personas"}</option>; })}</select><small>Hasta {INCLUDED_PEOPLE} personas incluidas · desde la {INCLUDED_PEOPLE + 1}.ª: +${EXTRA_PERSON_PRICE} MXN por persona</small></label>
           </div>
           {vipActive ? <div className="coupon-field">
-            <label htmlFor="coupon">Cupón VIP <span>(opcional)</span></label>
-            <div className="coupon-row"><input id="coupon" value={coupon} maxLength={24} autoCapitalize="characters" spellCheck={false} placeholder="NAVIDAD26" aria-describedby="coupon-message" onChange={(e) => { setCoupon(e.target.value); setCouponApplied(false); setCouponMessage(""); }} /><button type="button" disabled={checkingCoupon} onClick={() => void applyCoupon()}>{checkingCoupon ? "Validando…" : "Aplicar"}</button></div>
+            <label htmlFor="coupon">Cupón VIP sorpresa <span>(para familias registradas)</span></label>
+            <div className="coupon-row"><input id="coupon" value={coupon} maxLength={24} autoCapitalize="characters" spellCheck={false} placeholder="Código de acceso" aria-describedby="coupon-message" onChange={(e) => { setCoupon(e.target.value); setCouponApplied(false); setCouponMessage(""); }} /><button type="button" disabled={checkingCoupon} onClick={() => void applyCoupon()}>{checkingCoupon ? "Validando…" : "Aplicar"}</button></div>
             <p id="coupon-message" role="status" className={couponApplied ? "success-message" : "error-message"}>{couponMessage}</p>
           </div> : <div className="coupon-field coupon-disabled"><p role="status">La preventa general está activa. El código VIP y las fotos extra ya no están disponibles.</p></div>}
           <dl className="payment-summary">

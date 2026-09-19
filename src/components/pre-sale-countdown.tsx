@@ -26,6 +26,39 @@ export function usePresalePhase() {
   return phase ?? "vip";
 }
 
+function useVipSpacesRemaining() {
+  const [remaining, setRemaining] = useState(10);
+
+  useEffect(() => {
+    let active = true;
+    async function refresh() {
+      try {
+        const response = await fetch("/api/availability", { cache: "no-store" });
+        if (!response.ok) return;
+        const data = await response.json() as { coupon?: { claimed?: number; limit?: number } };
+        const limit = Math.max(0, data.coupon?.limit ?? 10);
+        const claimed = Math.max(0, data.coupon?.claimed ?? 0);
+        if (active) setRemaining(Math.max(0, limit - claimed));
+      } catch {
+        // Keep the last known count if availability is briefly unavailable.
+      }
+    }
+
+    void refresh();
+    const interval = window.setInterval(refresh, 30_000);
+    window.addEventListener("focus", refresh);
+    document.addEventListener("visibilitychange", refresh);
+    return () => {
+      active = false;
+      window.clearInterval(interval);
+      window.removeEventListener("focus", refresh);
+      document.removeEventListener("visibilitychange", refresh);
+    };
+  }, []);
+
+  return remaining;
+}
+
 type Remaining = {
   total: number;
   days: number;
@@ -84,10 +117,11 @@ export default function PreSaleCountdown() {
 
 export function PreSaleOffer() {
   const phase = usePresalePhase();
+  const spaces = useVipSpacesRemaining();
   return (
-    <p>
-      <strong>{phase === "vip" ? "NAVIDAD26" : "PREVENTA GENERAL"}</strong>{" "}
-      {phase === "vip" ? "$200 menos + 2 fotos extra · primeros 10 usos" : "$1,800 · 5 fotos editadas"}
+    <p className={phase === "vip" ? "is-vip-offer" : undefined}>
+      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "PREVENTA GENERAL"}</strong>
+      {phase === "vip" ? <span className="vip-spaces">Quedan <b>{spaces}</b> espacios con el cupón VIP · limitado a 10 lugares.</span> : <span>$1,800 · 5 fotos editadas</span>}
     </p>
   );
 }
@@ -96,8 +130,8 @@ export function PreSaleSeasonNote() {
   const phase = usePresalePhase();
   return (
     <p className="season-note">
-      <strong>{phase === "vip" ? "Oferta VIP" : "Preventa general"}</strong>{" "}
-      {phase === "vip" ? "NAVIDAD26: $1,600 · 7 fotos · primeros 10 usos" : "$1,800 · 5 fotos editadas"}
+      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "Preventa general"}</strong>{" "}
+      {phase === "vip" ? "Lugares limitados para familias registradas · máximo 10" : "$1,800 · 5 fotos editadas"}
     </p>
   );
 }
@@ -107,8 +141,8 @@ export function PreSaleBenefit() {
   const vip = phase === "vip";
   return (
     <div className="vip-note">
-      <p><strong>{vip ? "Beneficio VIP" : "Preventa general"}</strong><span>{vip ? <>Con <b>NAVIDAD26</b>: $1,600 y 2 fotos extra.</> : "$1,800 por sesión con 5 fotos editadas."}</span></p>
-      <small>{vip ? "Primeros 10 usos · Apartas con $800" : "Aparta con el 50% · código VIP no disponible"}</small>
+      <p><strong>{vip ? "Cupón VIP sorpresa" : "Preventa general"}</strong><span>{vip ? "Lugares limitados para familias registradas." : "$1,800 por sesión con 5 fotos editadas."}</span></p>
+      <small>{vip ? "Limitado a 10 lugares · Aparta con el 50%" : "Aparta con el 50% · código VIP no disponible"}</small>
     </div>
   );
 }
