@@ -14,7 +14,12 @@ export default function AmbientAudio() {
 
     audio.volume = 0.34;
 
-    const syncState = () => setIsPlaying(!audio.paused && !audio.ended);
+    let firstGesture: ((event: PointerEvent) => void) | undefined;
+    const syncState = () => {
+      const playing = !audio.paused && !audio.ended;
+      setIsPlaying(playing);
+      if (playing && firstGesture) document.removeEventListener("pointerdown", firstGesture);
+    };
     const storedPreference = window.localStorage.getItem(PREFERENCE_KEY);
     const shouldStart = storedPreference !== "off";
 
@@ -23,11 +28,14 @@ export default function AmbientAudio() {
       void audio.play().catch(() => undefined);
     };
 
-    let firstGesture: (() => void) | undefined;
     if (shouldStart) {
       tryStart();
-      firstGesture = tryStart;
-      document.addEventListener("pointerdown", firstGesture, { once: true, passive: true });
+      firstGesture = (event) => {
+        const target = event.target;
+        if (target instanceof Element && target.closest(".ambient-audio")) return;
+        tryStart();
+      };
+      document.addEventListener("pointerdown", firstGesture, { passive: true });
     }
 
     audio.addEventListener("play", syncState);
