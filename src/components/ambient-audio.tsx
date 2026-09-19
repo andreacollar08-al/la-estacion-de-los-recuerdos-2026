@@ -82,8 +82,6 @@ export default function AmbientAudio() {
           <path d="M4 10v4h3l5 4V6l-5 4H4Z" />
           {isPlaying ? <><path d="M16 9.5a4 4 0 0 1 0 5" /><path d="M19 7a8 8 0 0 1 0 10" /></> : <path d="m16 9 5 6" />}
         </svg>
-        <span>{isPlaying ? "Pausar música" : "Activar música"}</span>
-        <span className="ambient-audio-bars" aria-hidden="true"><i /><i /><i /></span>
       </button>
     </div>
   );
