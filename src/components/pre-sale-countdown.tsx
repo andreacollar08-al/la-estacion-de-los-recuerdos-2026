@@ -131,7 +131,7 @@ export function PreSaleSeasonNote() {
   return (
     <p className="season-note">
       <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "Preventa general"}</strong>{" "}
-      {phase === "vip" ? "Lugares limitados para familias registradas · máximo 10" : "$1,800 · 5 fotos editadas"}
+      {phase === "vip" ? <><span>Lugares limitados para familias registradas · máximo 10</span><span className="season-coupon-code">Código: NAVIDAD26</span></> : "$1,800 · 5 fotos editadas"}
     </p>
   );
 }
