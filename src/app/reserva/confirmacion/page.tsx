@@ -53,17 +53,14 @@ export default async function ConfirmationPage({ searchParams }: { searchParams:
 
 function DigitalTicket({ reservation }: { reservation: PaymentReservation }) {
   return <section className="digital-ticket" aria-label="Boleto digital de reserva">
-    <aside className="ticket-stub ticket-stub-left" aria-hidden="true"><span className="ticket-stub-code">RPA</span><strong className="ticket-number">{reservation.reference.slice(-4)}</strong><span className="ticket-stub-class">PASE<br />FAMILIAR</span></aside>
     <div className="ticket-body">
       <div className="ticket-topline"><span className="ticket-brand-lockup"><strong>RUBIEL</strong><small>PHOTO ART</small></span><small>NAVIDAD 2026</small></div>
-      <p className="ticket-kicker">TU VIAJE ESTÁ RESERVADO</p>
-      <Image className="ticket-train-engraving" src="/media/ticket-train-engraving.png" alt="" width={600} height={300} priority />
-      <h2><span>FAMILIA</span><strong>{reservation.name}</strong></h2>
-      <p className="ticket-experience">VÁLIDO PARA LA EXPERIENCIA FOTOGRÁFICA<br />LA ESTACIÓN DE LOS RECUERDOS</p>
+      <div className="ticket-main-art"><Image className="ticket-train-engraving" src="/media/ticket-train-engraving.png" alt="" width={600} height={300} priority /><div className="ticket-copy"><p className="ticket-kicker">ACCESO<br />PRIORITARIO</p><p className="ticket-validity">VÁLIDO PARA ABORDAR<br />EL TREN DE NAVIDAD</p><h2><span>FAMILIA</span><strong>{reservation.name}</strong></h2></div></div>
+      <p className="ticket-experience">· RUBIEL PHOTO ART · <em>LA ESTACIÓN DE LOS RECUERDOS</em> ·</p>
       <div className="ticket-details"><div><small>FECHA</small><strong>{reservation.date}</strong></div><div><small>HORA</small><strong>{reservation.time}</strong></div><div><small>PERSONAS</small><strong>{reservation.people}</strong></div></div>
       <div className="ticket-footer"><span>ANTICIPO RECIBIDO · ${reservation.deposit.toLocaleString("es-MX")} MXN</span><strong>{reservation.reference}</strong></div>
     </div>
-    <aside className="ticket-stub ticket-stub-right" aria-hidden="true"><span className="ticket-stub-label">CLASE PREFERENTE</span><strong className="ticket-stub-year">2026</strong><span className="ticket-stub-code">RPA</span></aside>
+    <aside className="ticket-stub ticket-stub-right" aria-hidden="true"><span className="ticket-stub-label">NO.</span><strong className="ticket-number">{reservation.reference.slice(-4)}</strong><span className="ticket-stub-class">CLASE<br />PREFERENTE</span></aside>
     <PrintTicket />
   </section>;
 }
