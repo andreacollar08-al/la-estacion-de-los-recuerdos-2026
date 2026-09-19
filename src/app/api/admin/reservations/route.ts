@@ -24,11 +24,15 @@ export async function POST(request: Request) {
 export async function PATCH(request: Request) {
   if (!(await hasAdminSession(request))) return NextResponse.json({ error: "Sesión no autorizada." }, { status: 401, headers: { "Cache-Control": "no-store" } });
   try {
-    const body = await request.json() as { reference?: unknown; photoStatus?: unknown; adminNote?: unknown };
+    const body = await request.json() as { reference?: unknown; name?: unknown; photoStatus?: unknown; adminNote?: unknown };
     if (typeof body.reference !== "string" || body.reference.length < 4 || body.reference.length > 120) {
       return NextResponse.json({ error: "Reserva inválida." }, { status: 400 });
     }
-    const patch: { photoStatus?: "pendientes" | "en_edicion" | "listas" | "entregadas"; adminNote?: string } = {};
+    const patch: { name?: string; photoStatus?: "pendientes" | "en_edicion" | "listas" | "entregadas"; adminNote?: string } = {};
+    if (body.name !== undefined) {
+      if (typeof body.name !== "string" || body.name.trim().length < 2 || body.name.trim().length > 90) return NextResponse.json({ error: "El nombre es inválido." }, { status: 400 });
+      patch.name = body.name.trim();
+    }
     if (body.photoStatus !== undefined) {
       if (typeof body.photoStatus !== "string" || !PHOTO_STATUSES.has(body.photoStatus)) return NextResponse.json({ error: "Estado de fotos inválido." }, { status: 400 });
       patch.photoStatus = body.photoStatus as NonNullable<typeof patch.photoStatus>;

@@ -24,7 +24,7 @@ export type PaymentStore = {
   list(): MaybePromise<PaymentReservation[]>;
   getAvailability(): MaybePromise<Availability>;
   reserve(input: ReservationInput, key: string): MaybePromise<PaymentReservation>;
-  updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">): MaybePromise<PaymentReservation>;
+  updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus"> & Partial<Pick<PaymentReservation, "name">>): MaybePromise<PaymentReservation>;
   attachSession(reference: string, id: string): MaybePromise<void>;
   transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string): MaybePromise<void>;
   due(): MaybePromise<PaymentReservation[]>;
@@ -98,7 +98,7 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, expires_at = ?, data = ? WHERE reference = ?")
       .run(r.state, r.sessionId, r.expiresAt, JSON.stringify(r), r.reference);
   }
-  function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">) {
+  function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus"> & Partial<Pick<PaymentReservation, "name">>) {
     const current = get(reference);
     if (!current) throw new BookingError("No encontramos esa reserva.", 404);
     const updated = { ...current, ...patch };
@@ -238,7 +238,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     await db.prepare("UPDATE payment_reservations SET session_id = ?, data = ? WHERE reference = ?")
       .bind(sessionId, JSON.stringify({ ...r, sessionId }), reference).run();
   }
-  async function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus">) {
+  async function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus"> & Partial<Pick<PaymentReservation, "name">>) {
     const current = await get(reference);
     if (!current) throw new BookingError("No encontramos esa reserva.", 404);
     const updated = { ...current, ...patch };
