@@ -987,6 +987,33 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   }
 }
 
+/* Gallery adaptation for touch-first widths, including compact tablets. */
+@media (max-width: 900px) {
+  .photo-marquee { margin-top: 24px; }
+  .photo-marquee-instruction {
+    max-width: 28ch;
+    margin-inline: auto;
+    margin-bottom: 10px;
+    font-size: clamp(9px, 1.8vw, 11px);
+    letter-spacing: .1em;
+  }
+  .photo-marquee-viewport { gap: 9px; padding-block: 3px 8px; }
+  .photo-marquee-group { gap: 9px; padding-right: 9px; }
+  .photo-marquee-card {
+    flex-basis: clamp(202px, 26vw, 226px);
+    border-radius: 15px;
+    box-shadow: 0 9px 18px rgba(40, 27, 17, .13);
+    touch-action: manipulation;
+  }
+  .photo-marquee-fade { width: clamp(22px, 5.5vw, 52px); }
+}
+
+@media (max-width: 760px) {
+  .photo-marquee { margin-top: 22px; }
+  .photo-marquee-card { flex-basis: clamp(204px, 64vw, 244px); border-radius: 14px; }
+  .photo-marquee-fade { width: clamp(20px, 7vw, 38px); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
