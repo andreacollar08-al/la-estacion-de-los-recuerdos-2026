@@ -205,6 +205,7 @@ input, select { min-width: 0; caret-color: var(--wine); }
 .booking-intro .section-label { color: var(--gold-light); }
 .booking-intro h2 { color: var(--paper-light); }
 .booking-intro > .section-lead { color: var(--gold-light); font-size: 16px; }
+.booking-intro > .booking-dates { width: fit-content; max-width: 100%; margin: 21px auto 0; padding: 11px 16px; border: 1px solid rgba(232, 204, 144, .62); border-left: 4px solid var(--gold-light); background: linear-gradient(90deg, rgba(183, 143, 69, .22), rgba(183, 143, 69, .06)); box-shadow: 0 10px 26px rgba(0, 0, 0, .2); color: #f0d79c; font-size: clamp(16px, 2vw, 20px); font-weight: 700; letter-spacing: .03em; line-height: 1.25; text-shadow: 0 1px 8px rgba(0, 0, 0, .42); }
 .booking-intro > p { margin-top: 17px; color: #d8cbb8; font-size: 14px; }
 .booking-intro .booking-policy { max-width: 32ch; padding-top: 17px; border-top: 1px solid var(--dark-line); font-size: 12px; line-height: 1.7; }
 .upcoming { display: flex; gap: 22px; margin-top: 34px; padding-top: 16px; border-top: 1px solid var(--dark-line); }
@@ -910,6 +911,12 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
 
   .vip-note p {
     align-items: center;
+  }
+
+  .booking-intro > .booking-dates {
+    margin-top: 20px;
+    padding: 12px 14px;
+    font-size: clamp(16px, 4.5vw, 22px);
   }
 }
 

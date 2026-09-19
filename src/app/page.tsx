@@ -186,7 +186,7 @@ export default function HomePage() {
             <div className="booking-intro">
               <p className="section-label">Reserva tu viaje</p>
               <h2 id="booking-title">Elige tu salida.</h2>
-              <p className="section-lead">Octubre 2026 · 21–24 y 28–31</p>
+              <p className="section-lead booking-dates">Octubre 2026 · 21–24 y 28–31</p>
               <p className="booking-policy">Anticipo del 50% no reembolsable.<br />Saldo en efectivo el día de la sesión.<br />1 cambio gratis dentro del mismo mes y temporada.</p>
               <div className="upcoming" aria-label="Próximas temporadas"><span>Noviembre <small>Próximamente</small></span><span>Diciembre <small>Próximamente</small></span></div>
             </div>
