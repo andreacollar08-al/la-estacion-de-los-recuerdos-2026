@@ -852,6 +852,60 @@ input:focus-visible, select:focus-visible { outline: 2px solid var(--wine); outl
   .step-note, .form-legal, .preview-note { font-size: clamp(11px, 2vw, 14px); }
 }
 
+/* Centered mobile story blocks */
+@media (max-width: 760px) {
+  .season-note {
+    max-width: 29ch;
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 9px;
+    text-align: center;
+    line-height: 1.35;
+  }
+
+  .season-note strong {
+    margin-right: 0;
+    padding: 6px 10px;
+    font-size: clamp(9px, 1.7vw, 12px);
+  }
+
+  .package-copy {
+    padding-top: 0;
+    text-align: center;
+  }
+
+  .package-copy .section-label,
+  .package-copy .section-lead,
+  .package-copy .package-list,
+  .package-copy .vip-note {
+    margin-inline: auto;
+  }
+
+  .package-list {
+    max-width: 34ch;
+  }
+
+  .package-list li {
+    display: block;
+    text-align: center;
+  }
+
+  .package-list li span {
+    display: inline-block;
+    margin-right: 8px;
+  }
+
+  .vip-note {
+    text-align: center;
+  }
+
+  .vip-note p {
+    align-items: center;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation: none !important; transition: none !important; }
