@@ -25,6 +25,8 @@ const galleryPhotos = [
   { src: "/media/navidad-2026-galeria-07.jpg", alt: "Dos mujeres leyendo el periódico en la estación", width: 1280, height: 1139 },
   { src: "/media/navidad-2026-galeria-08.jpg", alt: "Dos niños leyendo el periódico junto al tren", width: 1280, height: 1138 },
   { src: "/media/navidad-2026-galeria-09.jpg", alt: "Dos niños vestidos de maquinistas junto a la locomotora", width: 1280, height: 1139 },
+  { src: "/media/navidad-2026-galeria-10.jpg", alt: "Retrato de mujer con abrigo café junto a la locomotora", width: 853, height: 1280 },
+  { src: "/media/navidad-2026-galeria-11.jpg", alt: "Retrato de viajera con maleta frente a la locomotora", width: 853, height: 1280 },
   { src: "/media/navidad-2026-anden.jpg", alt: "Pequeño viajero listo para abordar el tren de los recuerdos", width: 1280, height: 853 },
 ];
 

@@ -12,6 +12,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
       `${SITE_URL}/media/navidad-2026-galeria-01.jpg`,
       `${SITE_URL}/media/navidad-2026-galeria-03.jpg`,
       `${SITE_URL}/media/navidad-2026-galeria-09.jpg`,
+      `${SITE_URL}/media/navidad-2026-galeria-10.jpg`,
+      `${SITE_URL}/media/navidad-2026-galeria-11.jpg`,
     ],
   }];
 }
