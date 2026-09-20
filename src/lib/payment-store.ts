@@ -119,7 +119,7 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     const slot = availability.dates.find((d) => d.iso === input.date)?.slots.find((s) => s.time === input.time);
     if (!slot?.available) throw new BookingError("Ese horario no está disponible. Selecciona otro.");
     if (input.coupon && input.coupon !== "NAVIDAD26") throw new BookingError("El cupón no es válido.");
-    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
+    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La tarifa preferente terminó. Continúa con el precio de preventa.");
     if (input.coupon && !availability.coupon.available) throw new BookingError("Los cupones VIP se agotaron. Revisa el precio antes de continuar.");
     const couponApplied = input.coupon === "NAVIDAD26";
     const reservation: PaymentReservation = {
@@ -210,7 +210,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     const slot = availability.dates.find((d) => d.iso === input.date)?.slots.find((s) => s.time === input.time);
     if (!slot?.available) throw new BookingError("Ese horario no está disponible. Selecciona otro.");
     if (input.coupon && input.coupon !== "NAVIDAD26") throw new BookingError("El cupón no es válido.");
-    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
+    if (input.coupon && !isVipPresaleActive(now())) throw new BookingError("La tarifa preferente terminó. Continúa con el precio de preventa.");
     if (input.coupon && !availability.coupon.available) throw new BookingError("Los cupones VIP se agotaron. Revisa el precio antes de continuar.");
     const couponApplied = input.coupon === "NAVIDAD26";
     const reservation: PaymentReservation = {

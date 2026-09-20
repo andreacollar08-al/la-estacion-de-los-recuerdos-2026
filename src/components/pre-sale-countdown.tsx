@@ -14,7 +14,7 @@ export function getPresalePhase(now = Date.now()): PresalePhase {
 }
 
 export function usePresalePhase() {
-  const [phase, setPhase] = useState<PresalePhase>();
+  const [phase, setPhase] = useState<PresalePhase>(() => getPresalePhase());
 
   useEffect(() => {
     const update = () => setPhase(getPresalePhase());
@@ -23,7 +23,7 @@ export function usePresalePhase() {
     return () => window.clearInterval(timer);
   }, []);
 
-  return phase ?? "vip";
+  return phase;
 }
 
 function useVipSpacesRemaining() {
@@ -120,8 +120,8 @@ export function PreSaleOffer() {
   const spaces = useVipSpacesRemaining();
   return (
     <p className={phase === "vip" ? "is-vip-offer" : undefined}>
-      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "PREVENTA GENERAL"}</strong>
-      {phase === "vip" ? <span className="vip-spaces">Quedan <b>{spaces}</b> espacios con el cupón VIP · limitado a 10 lugares.</span> : <span>$1,800 · 5 fotos editadas</span>}
+      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "PRECIO DE PREVENTA"}</strong>
+      {phase === "vip" ? <span className="vip-spaces">Quedan <b>{spaces}</b> espacios con el cupón VIP · limitado a 10 lugares.</span> : <span>$1,800 MXN · 5 fotos editadas</span>}
     </p>
   );
 }
@@ -130,8 +130,8 @@ export function PreSaleSeasonNote() {
   const phase = usePresalePhase();
   return (
     <p className="season-note">
-      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "Preventa general"}</strong>{" "}
-      {phase === "vip" ? <><span>Lugares limitados para familias registradas · máximo 10</span><span className="season-coupon-code">Código: NAVIDAD26</span></> : "$1,800 · 5 fotos editadas"}
+      <strong>{phase === "vip" ? "Cupón VIP sorpresa" : "Precio de preventa"}</strong>{" "}
+      {phase === "vip" ? <><span>Lugares limitados para familias registradas · máximo 10</span><span className="season-coupon-code">Código: NAVIDAD26</span></> : "$1,800 MXN por sesión · 5 fotos editadas"}
     </p>
   );
 }
@@ -141,8 +141,8 @@ export function PreSaleBenefit() {
   const vip = phase === "vip";
   return (
     <div className="vip-note">
-      <p><strong>{vip ? "Cupón VIP sorpresa" : "Preventa general"}</strong><span>{vip ? "Lugares limitados para familias registradas." : "$1,800 por sesión con 5 fotos editadas."}</span></p>
-      <small>{vip ? "Limitado a 10 lugares · Aparta con el 50%" : "Aparta con el 50% · código VIP no disponible"}</small>
+      <p><strong>{vip ? "Cupón VIP sorpresa" : "Precio de preventa"}</strong><span>{vip ? "Lugares limitados para familias registradas." : "$1,800 por sesión · 5 fotos editadas."}</span></p>
+      <small>{vip ? "Limitado a 10 lugares · Aparta con el 50%" : "Aparta con el 50%"}</small>
     </div>
   );
 }

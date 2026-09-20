@@ -3,6 +3,7 @@ import { hasAdminSession } from "@/lib/admin-auth";
 import { OCTOBER_DATES, TIME_SLOTS } from "@/lib/booking-config";
 import { getPaymentStore, type PaymentReservation } from "@/lib/payment-store";
 import { paymentMode } from "@/lib/stripe-payments";
+import { LEAD_SOURCE_VALUES, leadSourceLabels, normalizeLeadSource, type LeadSource } from "@/lib/lead-source";
 
 export const runtime = "nodejs";
 
@@ -17,6 +18,7 @@ function publicReservation(reservation: PaymentReservation) {
     people: reservation.people,
     photos: reservation.photos,
     couponApplied: reservation.couponApplied,
+    source: normalizeLeadSource(reservation.source),
     state: reservation.state,
     base: reservation.base,
     extraPeople: reservation.extraPeople,
@@ -36,6 +38,19 @@ export async function GET(request: Request) {
     const store = await getPaymentStore();
     const [reservations, availability] = await Promise.all([store.list(), store.getAvailability()]);
     const visible = reservations.map(publicReservation);
+    const leadSources = LEAD_SOURCE_VALUES.map((source: LeadSource) => {
+      const rows = visible.filter((reservation) => reservation.source === source);
+      const paid = rows.filter((reservation) => reservation.state === "paid").length;
+      const pending = rows.filter((reservation) => reservation.state === "held" || reservation.state === "processing").length;
+      return {
+        source,
+        label: leadSourceLabels[source],
+        leads: rows.length,
+        paid,
+        pending,
+        conversion: rows.length ? Math.round((paid / rows.length) * 100) : 0,
+      };
+    });
     const active = reservations.filter((reservation) => ["held", "processing", "paid"].includes(reservation.state));
     const paid = reservations.filter((reservation) => reservation.state === "paid");
     const pending = reservations.filter((reservation) => ["held", "processing"].includes(reservation.state));
@@ -58,6 +73,7 @@ export async function GET(request: Request) {
         pending: pending.reduce((sum, reservation) => sum + reservation.balance, 0),
       },
       coupon: availability.coupon,
+      leadSources,
       calendar,
       reservations: visible,
     }, { headers: { "Cache-Control": "no-store" } });

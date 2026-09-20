@@ -67,7 +67,7 @@ describe("persistent reservations", () => {
   it("rejects the VIP code after the scheduled deadline", () => {
     const s = store(":memory:", () => VIP_PRE_SALE_END_MS + 1);
     expect(s.getAvailability().coupon).toMatchObject({ active: false, available: false });
-    expect(() => s.reserve(input("16:00", "2026-10-23", "NAVIDAD26"), randomUUID())).toThrow("La preventa VIP terminó");
+    expect(() => s.reserve(input("16:00", "2026-10-23", "NAVIDAD26"), randomUUID())).toThrow("La tarifa preferente terminó");
   });
   it("lists reservations and persists admin photo status and notes", () => {
     const s = store();

@@ -5,6 +5,7 @@ import { EXTRA_PERSON_PRICE, INCLUDED_PEOPLE, INITIAL_RELEASED_TIMES, MAX_PEOPLE
 import { getReservationPricing, type ReservationInput } from "@/lib/booking";
 import { usePresalePhase } from "@/components/pre-sale-countdown";
 import { Confetti, type ConfettiRef } from "@/components/visual-effects";
+import { inferLeadSource, type LeadSource } from "@/lib/lead-source";
 
 type AvailabilityDate = Availability["dates"][number];
 const calendar: AvailabilityDate[] = OCTOBER_DATES.map((date) => ({
@@ -46,6 +47,7 @@ export default function BookingForm() {
   const [submitting, setSubmitting] = useState(false);
   const [paymentMode, setPaymentMode] = useState<Availability["paymentMode"]>("unavailable");
   const [vipServerActive, setVipServerActive] = useState<boolean>();
+  const [leadSource] = useState<LeadSource>(() => typeof window === "undefined" ? "direct" : inferLeadSource(window.location.search, document.referrer));
   const paymentAttempt = useRef<{ payload: string; key: string } | null>(null);
   const [form, setForm] = useState({ name: "", whatsapp: "", email: "" });
   const [people, setPeople] = useState(INCLUDED_PEOPLE);
@@ -110,7 +112,7 @@ export default function BookingForm() {
   async function applyCoupon() {
     if (!vipActive) {
       setCouponApplied(false);
-      setCouponMessage("La preventa VIP terminó. El código y las fotos extra ya no están disponibles.");
+      setCouponMessage("La tarifa preferente terminó. Continúa con el precio de preventa.");
       return;
     }
     if (coupon.trim().toUpperCase() !== "NAVIDAD26") {
@@ -141,7 +143,7 @@ export default function BookingForm() {
     }
     setSubmitting(true);
     setStatus("");
-    const payload: ReservationInput = { date: selectedDate, time: selectedTime, ...form, people, coupon: couponApplied && vipActive ? "NAVIDAD26" : "" };
+    const payload: ReservationInput = { date: selectedDate, time: selectedTime, ...form, people, coupon: couponApplied && vipActive ? "NAVIDAD26" : "", source: leadSource };
     const serialized = JSON.stringify(payload);
     if (!paymentAttempt.current || paymentAttempt.current.payload !== serialized) {
       paymentAttempt.current = { payload: serialized, key: crypto.randomUUID() };
@@ -204,7 +206,7 @@ export default function BookingForm() {
             <label htmlFor="coupon">Cupón VIP sorpresa <span>(para familias registradas)</span></label>
             <div className="coupon-row"><input id="coupon" value={coupon} maxLength={24} autoCapitalize="characters" spellCheck={false} placeholder="Código de acceso" aria-describedby="coupon-message" onChange={(e) => { setCoupon(e.target.value); setCouponApplied(false); setCouponMessage(""); }} /><button type="button" disabled={checkingCoupon} onClick={() => void applyCoupon()}>{checkingCoupon ? "Validando…" : "Aplicar"}</button></div>
             <p id="coupon-message" role="status" className={couponApplied ? "success-message" : "error-message"}>{couponMessage}</p>
-          </div> : <div className="coupon-field coupon-disabled"><p role="status">La preventa general está activa. El código VIP y las fotos extra ya no están disponibles.</p></div>}
+          </div> : <div className="coupon-field coupon-disabled"><p role="status">Precio de preventa: $1,800 MXN por sesión · 5 fotos editadas.</p></div>}
           <dl className="payment-summary">
             <div><dt>Sesión · {couponApplied ? 7 : 5} fotos</dt><dd>${pricing.base.toLocaleString("es-MX")} MXN</dd></div>
             {couponApplied && <div className="discount-row"><dt>Descuento VIP</dt><dd>−$200 MXN</dd></div>}

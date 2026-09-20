@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { EXTRA_PERSON_PRICE, HOLD_DURATION_MS, INCLUDED_PEOPLE, INITIAL_RELEASED_TIMES, isVipPresaleActive, MAX_PEOPLE, OCTOBER_DATES, REGULAR_SESSION_PRICE, TIME_SLOTS, VIP_SESSION_PRICE, type Availability } from "./booking-config";
+import { LEAD_SOURCE_VALUES } from "./lead-source";
 
 export { OCTOBER_DATES, TIME_SLOTS } from "./booking-config";
 
@@ -11,6 +12,7 @@ export const reservationSchema = z.object({
   email: z.string().trim().email().max(150),
   people: z.coerce.number().int().min(1).max(MAX_PEOPLE).default(INCLUDED_PEOPLE),
   coupon: z.string().trim().max(24).optional().default(""),
+  source: z.enum(LEAD_SOURCE_VALUES).default("direct"),
 });
 
 export type ReservationInput = z.infer<typeof reservationSchema>;
@@ -92,7 +94,7 @@ export function createBookingStore(
       return { ok: false as const, status: 409, error: "El cupón no es válido." };
     }
     if (input.coupon && !isVipPresaleActive(now())) {
-      return { ok: false as const, status: 409, error: "La preventa VIP terminó. El código y las fotos extra ya no están disponibles." };
+      return { ok: false as const, status: 409, error: "La tarifa preferente terminó. Continúa con el precio de preventa." };
     }
     const couponApplied = input.coupon.toUpperCase() === "NAVIDAD26" && availability.coupon.available;
     const pricing = getReservationPricing(input.people, couponApplied);

@@ -98,7 +98,7 @@ describe("staged booking", () => {
     expect(store.createReservation({ ...input(), coupon: "NAVIDAD26" })).toMatchObject({
       ok: false,
       status: 409,
-      error: "La preventa VIP terminó. El código y las fotos extra ya no están disponibles.",
+      error: "La tarifa preferente terminó. Continúa con el precio de preventa.",
     });
   });
 
