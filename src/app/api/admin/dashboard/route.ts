@@ -26,6 +26,8 @@ function publicReservation(reservation: PaymentReservation) {
     total: reservation.total,
     deposit: reservation.deposit,
     balance: reservation.balance,
+    sessionId: reservation.sessionId,
+    paymentIntentId: reservation.paymentIntentId,
     photoStatus: reservation.photoStatus ?? "pendientes",
     adminNote: reservation.adminNote ?? "",
     createdAt: reservation.createdAt,
