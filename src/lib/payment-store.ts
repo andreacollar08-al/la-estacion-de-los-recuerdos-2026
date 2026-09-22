@@ -8,7 +8,7 @@ import { HOLD_DURATION_MS, INITIAL_RELEASED_TIMES, isVipPresaleActive, OCTOBER_D
 export type PaymentReservation = ReservationInput & ReservationPricing & {
   reference: string; requestKey: string; fingerprint: string; couponApplied: boolean;
   photos: number; state: "held" | "processing" | "paid" | "expired" | "failed";
-  createdAt: number; expiresAt: number; sessionId: string | null;
+  createdAt: number; expiresAt: number; sessionId: string | null; paymentIntentId: string | null;
   adminNote?: string;
   photoStatus?: "pendientes" | "en_edicion" | "listas" | "entregadas";
 };
@@ -25,8 +25,8 @@ export type PaymentStore = {
   getAvailability(): MaybePromise<Availability>;
   reserve(input: ReservationInput, key: string): MaybePromise<PaymentReservation>;
   updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus"> & Partial<Pick<PaymentReservation, "name">>): MaybePromise<PaymentReservation>;
-  attachSession(reference: string, id: string): MaybePromise<void>;
-  transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string): MaybePromise<void>;
+  attachSession(reference: string, id: string, paymentIntentId?: string | null): MaybePromise<void>;
+  transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string, paymentIntentId?: string | null): MaybePromise<void>;
   due(): MaybePromise<PaymentReservation[]>;
   close(): MaybePromise<void>;
 };
@@ -125,40 +125,51 @@ export function createPaymentStore(path: string, now = () => Date.now()) {
     const reservation: PaymentReservation = {
       ...input, ...getReservationPricing(input.people, couponApplied), couponApplied,
       photos: couponApplied ? 7 : 5, requestKey, fingerprint: currentFingerprint,
-      reference: `RPA-${randomUUID()}`, state: "held", sessionId: null,
+      reference: `RPA-${randomUUID()}`, state: "held", sessionId: null, paymentIntentId: null,
       createdAt: now(), expiresAt: now() + HOLD_DURATION_MS,
     };
     db.prepare("INSERT INTO payment_reservations (reference, request_key, date, time, state, expires_at, data) VALUES (?, ?, ?, ?, ?, ?, ?)")
       .run(reservation.reference, requestKey, input.date, input.time, reservation.state, reservation.expiresAt, JSON.stringify(reservation));
     return reservation;
   });
-  const attachSession = db.transaction((reference: string, sessionId: string) => {
+  const attachSession = db.transaction((reference: string, sessionId: string, paymentIntentId?: string | null) => {
     const r = get(reference);
     if (!r || (r.sessionId && r.sessionId !== sessionId)) throw new Error("Checkout session mismatch");
-    save({ ...r, sessionId });
+    const currentPaymentIntentId = r.paymentIntentId ?? null;
+    if (currentPaymentIntentId && paymentIntentId && currentPaymentIntentId !== paymentIntentId) throw new Error("Payment intent mismatch");
+    save({ ...r, sessionId, paymentIntentId: paymentIntentId ?? currentPaymentIntentId });
   });
-  const transition = db.transaction((reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string) => {
+  const transition = db.transaction((reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string, paymentIntentId?: string | null) => {
     if (eventId && db.prepare("SELECT id FROM processed_stripe_events WHERE id = ?").get(eventId)) return;
     const r = get(reference);
     if (!r || (r.sessionId && r.sessionId !== sessionId)) throw new Error("Unknown reservation or session");
-    if (r.state === "paid") return;
-    if (["expired", "failed"].includes(r.state)) {
-      if (state === "paid") throw new Error("Payment received for a released reservation; manual review required");
+    const currentPaymentIntentId = r.paymentIntentId ?? null;
+    if (currentPaymentIntentId && paymentIntentId && currentPaymentIntentId !== paymentIntentId) throw new Error("Payment intent mismatch");
+    const updated = { ...r, sessionId, paymentIntentId: paymentIntentId ?? currentPaymentIntentId };
+    if (r.state === "paid") {
+      if (updated.paymentIntentId !== currentPaymentIntentId) save(updated);
+      if (eventId) db.prepare("INSERT OR IGNORE INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").run(eventId, now());
       return;
     }
-    save({ ...r, sessionId, state });
+    if (["expired", "failed"].includes(r.state)) {
+      if (state === "paid") throw new Error("Payment received for a released reservation; manual review required");
+      if (updated.paymentIntentId !== currentPaymentIntentId) save(updated);
+      if (eventId) db.prepare("INSERT OR IGNORE INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").run(eventId, now());
+      return;
+    }
+    save({ ...updated, state });
     if (state === "paid") {
       const open = released(r.date);
       const next = TIME_SLOTS.find((time) => !open.has(time));
       if (next) db.prepare("INSERT OR IGNORE INTO payment_released_slots (date, time) VALUES (?, ?)").run(r.date, next);
     }
-    if (eventId) db.prepare("INSERT INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").run(eventId, now());
+    if (eventId) db.prepare("INSERT OR IGNORE INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").run(eventId, now());
   });
   return {
     get, getBySession, list, getAvailability, updateAdmin,
     reserve: (input: ReservationInput, key: string) => reserve.immediate(input, key),
-    attachSession: (reference: string, id: string) => attachSession.immediate(reference, id),
-    transition: (reference: string, id: string, state: PaymentReservation["state"], eventId?: string) => transition.immediate(reference, id, state, eventId),
+    attachSession: (reference: string, id: string, paymentIntentId?: string | null) => attachSession.immediate(reference, id, paymentIntentId),
+    transition: (reference: string, id: string, state: PaymentReservation["state"], eventId?: string, paymentIntentId?: string | null) => transition.immediate(reference, id, state, eventId, paymentIntentId),
     due: () => all().filter((r) => r.state === "held" && r.expiresAt <= now()),
     close: () => { db.close(); },
   };
@@ -216,7 +227,7 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     const reservation: PaymentReservation = {
       ...input, ...getReservationPricing(input.people, couponApplied), couponApplied,
       photos: couponApplied ? 7 : 5, requestKey, fingerprint: currentFingerprint,
-      reference: `RPA-${randomUUID()}`, state: "held", sessionId: null,
+      reference: `RPA-${randomUUID()}`, state: "held", sessionId: null, paymentIntentId: null,
       createdAt: now(), expiresAt: now() + HOLD_DURATION_MS,
     };
     try {
@@ -232,11 +243,13 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
     }
     return reservation;
   }
-  async function attachSession(reference: string, sessionId: string) {
+  async function attachSession(reference: string, sessionId: string, paymentIntentId?: string | null) {
     const r = await get(reference);
     if (!r || (r.sessionId && r.sessionId !== sessionId)) throw new Error("Checkout session mismatch");
+    const currentPaymentIntentId = r.paymentIntentId ?? null;
+    if (currentPaymentIntentId && paymentIntentId && currentPaymentIntentId !== paymentIntentId) throw new Error("Payment intent mismatch");
     await db.prepare("UPDATE payment_reservations SET session_id = ?, data = ? WHERE reference = ?")
-      .bind(sessionId, JSON.stringify({ ...r, sessionId }), reference).run();
+      .bind(sessionId, JSON.stringify({ ...r, sessionId, paymentIntentId: paymentIntentId ?? currentPaymentIntentId }), reference).run();
   }
   async function updateAdmin(reference: string, patch: Pick<PaymentReservation, "adminNote" | "photoStatus"> & Partial<Pick<PaymentReservation, "name">>) {
     const current = await get(reference);
@@ -246,20 +259,35 @@ export function createD1PaymentStore(db: D1DatabaseLike, now = () => Date.now())
       .bind(updated.state, updated.sessionId, updated.expiresAt, JSON.stringify(updated), updated.reference).run();
     return updated;
   }
-  async function transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string) {
+  async function transition(reference: string, sessionId: string, state: PaymentReservation["state"], eventId?: string, paymentIntentId?: string | null) {
     if (eventId) {
       const seen = await db.prepare("SELECT id FROM processed_stripe_events WHERE id = ?").bind(eventId).first();
       if (seen) return;
     }
     const r = await get(reference);
     if (!r || (r.sessionId && r.sessionId !== sessionId)) throw new Error("Unknown reservation or session");
-    if (r.state === "paid") return;
-    if (["expired", "failed"].includes(r.state)) {
-      if (state === "paid") throw new Error("Payment received for a released reservation; manual review required");
+    const currentPaymentIntentId = r.paymentIntentId ?? null;
+    if (currentPaymentIntentId && paymentIntentId && currentPaymentIntentId !== paymentIntentId) throw new Error("Payment intent mismatch");
+    const updated = { ...r, sessionId, paymentIntentId: paymentIntentId ?? currentPaymentIntentId };
+    if (r.state === "paid") {
+      if (updated.paymentIntentId !== currentPaymentIntentId) {
+        await db.prepare("UPDATE payment_reservations SET session_id = ?, data = ? WHERE reference = ?")
+          .bind(sessionId, JSON.stringify(updated), reference).run();
+      }
+      if (eventId) await db.prepare("INSERT OR IGNORE INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").bind(eventId, now()).run();
       return;
     }
-    const updated = { ...r, sessionId, state };
-    const statements = [db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, data = ? WHERE reference = ?").bind(state, sessionId, JSON.stringify(updated), reference)];
+    if (["expired", "failed"].includes(r.state)) {
+      if (state === "paid") throw new Error("Payment received for a released reservation; manual review required");
+      if (updated.paymentIntentId !== currentPaymentIntentId) {
+        await db.prepare("UPDATE payment_reservations SET session_id = ?, data = ? WHERE reference = ?")
+          .bind(sessionId, JSON.stringify(updated), reference).run();
+      }
+      if (eventId) await db.prepare("INSERT OR IGNORE INTO processed_stripe_events (id, processed_at) VALUES (?, ?)").bind(eventId, now()).run();
+      return;
+    }
+    const transitioned = { ...updated, state };
+    const statements = [db.prepare("UPDATE payment_reservations SET state = ?, session_id = ?, data = ? WHERE reference = ?").bind(state, sessionId, JSON.stringify(transitioned), reference)];
     if (state === "paid") {
       const current = await getAvailability();
       const open = new Set(current.dates.find((d) => d.iso === r.date)?.slots.filter((s) => s.status === "available").map((s) => s.time) ?? []);
