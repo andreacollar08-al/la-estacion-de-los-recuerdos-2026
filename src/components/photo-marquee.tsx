@@ -48,7 +48,14 @@ function PhotoCard({
       onPointerCancel={onTouchEnd}
       onPointerLeave={onTouchEnd}
     >
-      <Image src={photo.src} alt={duplicate ? "" : photo.alt} width={photo.width} height={photo.height} sizes="(max-width: 760px) 64vw, 260px" />
+      <Image
+        src={photo.src}
+        alt={duplicate ? "" : photo.alt}
+        width={photo.width}
+        height={photo.height}
+        sizes="(max-width: 760px) 64vw, 260px"
+        loading="eager"
+      />
       <span className="photo-marquee-card-hint" aria-hidden="true">Ver foto</span>
     </button>
   );
