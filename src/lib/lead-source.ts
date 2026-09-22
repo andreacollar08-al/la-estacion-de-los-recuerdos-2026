@@ -1,3 +1,4 @@
+
 export const LEAD_SOURCE_VALUES = ["direct", "facebook", "instagram", "whatsapp", "google", "other"] as const;
 export type LeadSource = (typeof LEAD_SOURCE_VALUES)[number];
 
@@ -50,7 +51,7 @@ export function inferLeadSource(search = "", referrer = ""): LeadSource {
     if (host.includes("instagram") || host === "ig.me") return "instagram";
     if (host.includes("whatsapp") || host === "wa.me") return "whatsapp";
     if (host === "google.com" || host.endsWith(".google.com") || host.endsWith(".google.com.mx")) return "google";
-    if (host.includes("rubiel-photo.chatgpt.site") || host === "rubielphoto.com" || host.endsWith(".rubielphoto.com")) return "direct";
+    if (host === "rubielphoto.com" || host.endsWith(".rubielphoto.com")) return "direct";
   } catch {
     return "other";
   }
