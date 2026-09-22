@@ -1,3 +1,4 @@
+
 import Stripe from "stripe";
 import type { ReservationInput } from "./booking";
 import { BookingError, getPaymentStore, type PaymentReservation, type PaymentStore } from "./payment-store";
@@ -25,8 +26,8 @@ export function paymentMode(): "demo" | "stripe" | "unavailable" {
 }
 
 export function siteUrl() {
-  const url = new URL(process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000");
-  if (url.protocol !== "https:" && !(url.protocol === "http:" && ["localhost", "127.0.0.1"].includes(url.hostname))) throw new Error("Invalid site URL");
+  const url = new URL(process.env.NEXT_PUBLIC_SITE_URL || "https://rubielphoto.com");
+  if (url.protocol !== "https:") throw new Error("Invalid site URL");
   if (url.username || url.password || url.search || url.hash || url.pathname !== "/") throw new Error("Expected site origin");
   if (process.env.STRIPE_SECRET_KEY?.includes("_live_") && url.protocol !== "https:") throw new Error("Live payments require HTTPS");
   return url.origin;
