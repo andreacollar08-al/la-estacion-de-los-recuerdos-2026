@@ -17,7 +17,7 @@ function store(path = ":memory:", now = () => Date.now()) {
 afterEach(() => { for (const s of stores.splice(0)) { try { s.close(); } catch {} } vi.unstubAllEnvs(); });
 const input = (time = "16:00", date = "2026-10-21", coupon = "") => reservationSchema.parse({ date, time, coupon, name: "Familia Test", email: "test@example.com", whatsapp: "9210000000", people: 5 });
 function session(r: PaymentReservation, overrides: Partial<Stripe.Checkout.Session> = {}) {
-  return { id: `cs_test_${r.reference}`, object: "checkout.session", metadata: { project: PAYMENT_PROJECT, reservation_reference: r.reference }, client_reference_id: r.reference, mode: "payment", amount_total: r.deposit * 100, currency: "mxn", status: "open", payment_status: "unpaid", url: "https://checkout.stripe.com/test", ...overrides } as Stripe.Checkout.Session;
+  return { id: `cs_test_${r.reference}`, object: "checkout.session", metadata: { project: PAYMENT_PROJECT, reservation_reference: r.reference }, client_reference_id: r.reference, mode: "payment", amount_total: r.deposit * 100, currency: "mxn", status: "open", payment_status: "unpaid", payment_intent: null, url: "https://checkout.stripe.com/test", ...overrides } as Stripe.Checkout.Session;
 }
 function client() {
   const sessions = { create: vi.fn(), retrieve: vi.fn(), expire: vi.fn() };
@@ -95,6 +95,34 @@ describe("Stripe payment lifecycle", () => {
     expect(sessions.create.mock.calls[0][0]).toMatchObject({ line_items: [{ price_data: { unit_amount: 110000, currency: "mxn" } }], payment_method_types: ["card"], success_url: "https://rubielphoto.com/reserva/confirmacion?session_id={CHECKOUT_SESSION_ID}" });
     expect(sessions.create.mock.calls[0][1].idempotencyKey).toBe(`navidad-2026:${r.reference}`);
   });
+  it("sends reservation metadata to Checkout and persists the payment identifiers", async () => {
+    const s = store(); const { stripe, sessions } = client(); const service = createPaymentService(stripe, s, "https://rubielphoto.com");
+    sessions.create.mockImplementation(async (params) => session(s.get(params.client_reference_id)!));
+    const result = await service.reserve(input(), randomUUID());
+    const r = s.get(result.reference)!;
+    const params = sessions.create.mock.calls[0][0];
+    expect(params).toMatchObject({
+      customer_email: r.email,
+      client_reference_id: r.reference,
+      metadata: {
+        project: PAYMENT_PROJECT,
+        reservation_reference: r.reference,
+        customer_name: r.name,
+        customer_phone: r.whatsapp,
+        customer_email: r.email,
+        session_date: r.date,
+        session_time: r.time,
+      },
+      payment_intent_data: { metadata: { project: PAYMENT_PROJECT, reservation_reference: r.reference, customer_name: r.name } },
+      line_items: [{ price_data: { currency: "mxn", unit_amount: 90000 } }],
+    });
+    const paid = session(r, { status: "complete", payment_status: "paid", payment_intent: "pi_test_navidad" });
+    await service.applySession(paid, "evt_paid");
+    expect(s.get(r.reference)).toMatchObject({ state: "paid", sessionId: paid.id, paymentIntentId: "pi_test_navidad" });
+    sessions.retrieve.mockResolvedValue(paid);
+    await service.handleEvent({ id: "evt_paid", type: "checkout.session.completed", data: { object: paid } } as Stripe.Event);
+    expect(s.get(r.reference)?.state).toBe("paid");
+  });
   it("recovers a timed-out checkout using the original Stripe idempotency key", async () => {
     const s = store(); const { stripe, sessions } = client(); const service = createPaymentService(stripe, s, "https://rubielphoto.com");
     sessions.create.mockRejectedValueOnce(new Error("timeout")).mockImplementationOnce(async params => session(s.get(params.client_reference_id)!));
@@ -155,11 +183,24 @@ describe("Stripe payment lifecycle", () => {
     service.applySession(session(r, { status: "complete", payment_status: "unpaid" }), "evt_failed", true);
     expect(s.get(r.reference)?.state).toBe("failed");
   });
+  it("releases a failed payment so the customer can reserve the same slot again", async () => {
+    const s = store(); const r = s.reserve(input("17:30"), randomUUID()); const { stripe } = client();
+    const service = createPaymentService(stripe, s, "https://rubielphoto.com");
+    await service.applySession(session(r, { status: "complete", payment_status: "unpaid" }), "evt_processing");
+    await service.applySession(session(r, { status: "complete", payment_status: "unpaid" }), "evt_failed", true);
+    expect(s.get(r.reference)?.state).toBe("failed");
+    expect(s.getAvailability().dates[0].slots.find((slot) => slot.time === "17:30")?.available).toBe(true);
+    expect(s.reserve(input("17:30"), randomUUID()).reference).not.toBe(r.reference);
+  });
 });
 
 describe("webhook configuration and signature", () => {
   it("does not enable charges merely because credentials exist", () => {
     vi.stubEnv("MOCK_PAYMENTS", "false"); vi.stubEnv("STRIPE_SECRET_KEY", "sk_test_fake"); vi.stubEnv("STRIPE_WEBHOOK_SECRET", "whsec_fake"); vi.stubEnv("STRIPE_PAYMENTS_ENABLED", "false");
+    expect(paymentMode()).toBe("unavailable");
+  });
+  it("never enables mock payments in production", () => {
+    vi.stubEnv("NODE_ENV", "production"); vi.stubEnv("MOCK_PAYMENTS", "true");
     expect(paymentMode()).toBe("unavailable");
   });
   it("rejects missing, forged, stale or mutated webhook signatures", async () => {
