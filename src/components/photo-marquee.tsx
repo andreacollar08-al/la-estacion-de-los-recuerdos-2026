@@ -28,12 +28,14 @@ function PhotoCard({
   onOpen,
   onTouchStart,
   onTouchEnd,
+  onPhotoReady,
 }: {
   photo: MarqueePhoto;
   duplicate: boolean;
   onOpen: (photo: MarqueePhoto, event: MouseEvent<HTMLButtonElement>) => void;
   onTouchStart: (event: PointerEvent<HTMLButtonElement>) => void;
   onTouchEnd: (event: PointerEvent<HTMLButtonElement>) => void;
+  onPhotoReady: (src: string) => void;
 }) {
   return (
     <button
@@ -55,6 +57,9 @@ function PhotoCard({
         height={photo.height}
         sizes="(max-width: 760px) 64vw, 260px"
         loading="eager"
+        data-photo-src={photo.src}
+        onLoad={() => { if (!duplicate) onPhotoReady(photo.src); }}
+        onError={() => { if (!duplicate) onPhotoReady(photo.src); }}
       />
       <span className="photo-marquee-card-hint" aria-hidden="true">Ver foto</span>
     </button>
@@ -67,21 +72,23 @@ function PhotoRow({
   onOpen,
   onTouchStart,
   onTouchEnd,
+  onPhotoReady,
 }: {
   photos: MarqueePhoto[];
   reverse?: boolean;
   onOpen: (photo: MarqueePhoto, event: MouseEvent<HTMLButtonElement>) => void;
   onTouchStart: (event: PointerEvent<HTMLButtonElement>) => void;
   onTouchEnd: (event: PointerEvent<HTMLButtonElement>) => void;
+  onPhotoReady: (src: string) => void;
 }) {
   return (
     <div className="photo-marquee-row">
       <div className={`photo-marquee-track${reverse ? " photo-marquee-track-reverse" : ""}`}>
         <div className="photo-marquee-group">
-          {photos.map((photo) => <PhotoCard key={photo.src} photo={photo} duplicate={false} onOpen={onOpen} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} />)}
+          {photos.map((photo) => <PhotoCard key={photo.src} photo={photo} duplicate={false} onOpen={onOpen} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onPhotoReady={onPhotoReady} />)}
         </div>
         <div className="photo-marquee-group" aria-hidden="true">
-          {photos.map((photo) => <PhotoCard key={`${photo.src}-duplicate`} photo={photo} duplicate onOpen={onOpen} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} />)}
+          {photos.map((photo) => <PhotoCard key={`${photo.src}-duplicate`} photo={photo} duplicate onOpen={onOpen} onTouchStart={onTouchStart} onTouchEnd={onTouchEnd} onPhotoReady={onPhotoReady} />)}
         </div>
       </div>
     </div>
@@ -91,10 +98,27 @@ function PhotoRow({
 export default function PhotoMarquee({ photos }: PhotoMarqueeProps) {
   const [activePhoto, setActivePhoto] = useState<MarqueePhoto | null>(null);
   const [isTouching, setIsTouching] = useState(false);
+  const [readyPhotos, setReadyPhotos] = useState<Set<string>>(() => new Set());
   const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const photoKey = photos.map((photo) => photo.src).join("|");
+  const isReady = photos.length === 0 || readyPhotos.size >= photos.length;
 
   const firstRow = photos.slice(0, Math.ceil(photos.length / 2));
   const secondRow = photos.slice(Math.ceil(photos.length / 2));
+
+  useEffect(() => {
+    setReadyPhotos(new Set());
+    const frame = window.requestAnimationFrame(() => {
+      const loaded = new Set(
+        Array.from(document.querySelectorAll<HTMLImageElement>(".photo-marquee-card img[data-photo-src]"))
+          .filter((image) => image.complete && image.naturalWidth > 0)
+          .map((image) => image.dataset.photoSrc)
+          .filter((src): src is string => Boolean(src)),
+      );
+      if (loaded.size > 0) setReadyPhotos(loaded);
+    });
+    return () => window.cancelAnimationFrame(frame);
+  }, [photoKey]);
 
   useEffect(() => {
     if (!activePhoto) return;
@@ -127,13 +151,22 @@ export default function PhotoMarquee({ photos }: PhotoMarqueeProps) {
     if (event.pointerType === "touch") setIsTouching(false);
   }
 
+  function handlePhotoReady(src: string) {
+    setReadyPhotos((current) => {
+      if (current.has(src)) return current;
+      const next = new Set(current);
+      next.add(src);
+      return next;
+    });
+  }
+
   return (
     <>
-      <div className={`photo-marquee${isTouching ? " is-touching" : ""}`} aria-label="Galería de fotografías del set">
+      <div className={`photo-marquee${isTouching ? " is-touching" : ""}${isReady ? " is-ready" : " is-loading"}`} aria-label="Galería de fotografías del set" aria-busy={!isReady}>
         <p className="photo-marquee-instruction">Toca una foto para verla completa</p>
         <div className="photo-marquee-viewport">
-          <PhotoRow photos={firstRow} onOpen={openPhoto} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} />
-          <PhotoRow photos={secondRow} reverse onOpen={openPhoto} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} />
+          <PhotoRow photos={firstRow} onOpen={openPhoto} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onPhotoReady={handlePhotoReady} />
+          <PhotoRow photos={secondRow} reverse onOpen={openPhoto} onTouchStart={handleTouchStart} onTouchEnd={handleTouchEnd} onPhotoReady={handlePhotoReady} />
           <span className="photo-marquee-fade photo-marquee-fade-left" aria-hidden="true" />
           <span className="photo-marquee-fade photo-marquee-fade-right" aria-hidden="true" />
         </div>
