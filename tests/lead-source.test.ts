@@ -17,7 +17,7 @@ describe("lead source attribution", () => {
     expect(inferLeadSource("", "https://l.facebook.com/l.php")).toBe("facebook");
     expect(inferLeadSource("", "https://l.instagram.com/" )).toBe("instagram");
     expect(inferLeadSource("", "https://web.whatsapp.com/" )).toBe("whatsapp");
-    expect(inferLeadSource("", "https://la-estacion-de-los-recuerdos-2026.rubiel-photo.chatgpt.site/#reserva")).toBe("direct");
+    expect(inferLeadSource("", "https://rubielphoto.com/#reserva")).toBe("direct");
     expect(inferLeadSource("", "")).toBe("direct");
   });
 
@@ -27,3 +27,4 @@ describe("lead source attribution", () => {
     expect(normalizeLeadSource("unknown-channel")).toBe("other");
   });
 });
+
