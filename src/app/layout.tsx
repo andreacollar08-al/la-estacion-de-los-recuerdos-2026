@@ -50,8 +50,8 @@ export const metadata: Metadata = {
       secureUrl: SHARE_IMAGE,
       type: "image/jpeg",
       width: 1280,
-      height: 837,
-      alt: "La Estación de los Recuerdos · mini sesiones navideñas 2026 en Palenque",
+      height: 853,
+      alt: "La Estación de los Recuerdos · familia en la locomotora · Navidad 2026",
     }],
   },
   twitter: {
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
       secureUrl: SHARE_IMAGE,
       type: "image/jpeg",
       width: 1280,
-      height: 837,
-      alt: "La Estación de los Recuerdos · mini sesiones navideñas 2026 en Palenque",
+      height: 853,
+      alt: "La Estación de los Recuerdos · familia en la locomotora · Navidad 2026",
     }],
   },
 };
