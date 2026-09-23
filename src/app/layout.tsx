@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
-import { HERO_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { HERO_IMAGE, SHARE_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -40,18 +40,32 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: "La Estación de los Recuerdos · Navidad 2026",
-    description: "Mini sesiones fotográficas navideñas en Palenque, Chiapas: una estación, una familia y recuerdos para siempre.",
+    description: "Mini sesiones navideñas en Palenque, Chiapas · 21–24 y 28–31 de octubre · Locomotora, vapor y 5 fotos editadas.",
     type: "website",
     url: SITE_URL,
     siteName: "Rubiel Photo Art",
     locale: "es_MX",
-    images: [{ url: HERO_IMAGE, width: 1280, height: 837, alt: "La Estación de los Recuerdos · Rubiel Photo Art" }],
+    images: [{
+      url: SHARE_IMAGE,
+      secureUrl: SHARE_IMAGE,
+      type: "image/jpeg",
+      width: 1280,
+      height: 837,
+      alt: "La Estación de los Recuerdos · mini sesiones navideñas 2026 en Palenque",
+    }],
   },
   twitter: {
     card: "summary_large_image",
     title: "La Estación de los Recuerdos · Navidad 2026",
-    description: "Mini sesiones fotográficas navideñas en Palenque, Chiapas.",
-    images: [HERO_IMAGE],
+    description: "Mini sesiones navideñas en Palenque, Chiapas · 21–24 y 28–31 de octubre · 5 fotos editadas.",
+    images: [{
+      url: SHARE_IMAGE,
+      secureUrl: SHARE_IMAGE,
+      type: "image/jpeg",
+      width: 1280,
+      height: 837,
+      alt: "La Estación de los Recuerdos · mini sesiones navideñas 2026 en Palenque",
+    }],
   },
 };
 
