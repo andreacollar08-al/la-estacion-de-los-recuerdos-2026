@@ -8,4 +8,4 @@ export const HERO_IMAGE = `${SITE_URL}/media/navidad-2026-maquinistas.jpg`;
 // dedicated preview asset instead of guessing from the first image in the
 // page. The query version also lets a refreshed preview be fetched after an
 // image or metadata update.
-export const SHARE_IMAGE = `${SITE_URL}/media/navidad-2026-maquinistas.jpg?v=20260922`;
+export const SHARE_IMAGE = `${SITE_URL}/media/navidad-2026-share.jpg?v=20260922-2`;
